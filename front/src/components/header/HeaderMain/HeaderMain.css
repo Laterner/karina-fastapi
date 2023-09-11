@@ -92,6 +92,7 @@
 @media (max-width: 1000px) {
     .right-side-bar {
         flex-direction: column;
+        margin-top: 23px;
     }
     .search_wrap {
         width: 100%;
