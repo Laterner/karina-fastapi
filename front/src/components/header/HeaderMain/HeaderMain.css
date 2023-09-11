@@ -55,19 +55,61 @@
 .header_bar {
     padding: 1px 20px;
 }
+.right-side-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.info_container {
+    height: 32px;
+    align-items: center;
+    float: right;
+}
 .search_input {
     border: none;
 }
 .search_input:focus {
     outline: none;
 }
-
+.btn-text {
+    display: flex;
+    align-items: center;
+    visibility: visible;
+}
+.btn-svg {
+    display: none;
+    visibility: hidden;
+}
 .search_wrap {
     display: flex;
     align-items: center;
     padding: 0 15px;
     border-radius: 10px;
     background-color: #fff;
+    width: calc(100% - 200px);
+}
+@media (max-width: 1000px) {
+    .right-side-bar {
+        flex-direction: column;
+    }
+    .search_wrap {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .info_container {
+        padding-right: 10px;
+        margin-left: auto;
+    }
+    .btn-svg {
+        display: flex;
+        align-items: center;
+        visibility: visible;
+    }
+    .btn-text {
+        display: none;
+        visibility: hidden;
+    }
 }
 @media (max-width: 550px) {
     .menu-main {padding-top: 0;}
