@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  api:
+    build: ./api
+    container_name: karina_api
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./api/src/:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    networks:
+      - karina
+
+  # db:
+  #   image: postgres:12.1-alpine
+  #   container_name: karina_db
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/
+  #   env_file:
+  #     - .env
+  #   ports:
+  #       - "127.0.0.1:5432:5432"
+  #   networks:
+  #     - karina
+
+  karina_front:
+    container_name: karina_front
+    build: ./front
+    networks:
+      - karina
+    ports:
+      - 80:80
+      - 443:443
+
+volumes:
+  postgres_data:
+networks:
+  karina:

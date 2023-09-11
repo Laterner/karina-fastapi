@@ -1,0 +1,28 @@
+.ant-pagination-item {
+  display: inline-block;
+  min-width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  line-height: 22px;
+  text-align: center;
+  vertical-align: middle;
+  list-style: none;
+  background-color: #E5E5E5;
+  border-radius: 2px;
+  outline: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ant-pagination-item-active {
+  font-weight: 500;
+  border: 2px solid #feb386!important;
+  border-radius: 4px;
+}
+
+.ant-pagination-item-active a {
+  color: #feb386!important;
+}
