@@ -4,7 +4,7 @@ import { PriceText, TitleText } from '../../../shared/styledComponents/Texts';
 import { CardButton, CountButton } from '../../../shared/styledComponents/Buttons';
 import { ICard } from '../../../pages/CartPage/cartPage.types';
 import { CountInput } from '../../../shared/styledComponents/Inputs';
-import NoImage from '../../../pages/subcom/no_image.png';
+import NoImage from '../../../no_image.png';
 import { fetchData } from '../../api/API';
 
 import { CartCardBody, CartCardContainer, CartCardCount } from './cartCard.styled';

@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/order
-import NoImage from './no_image.png';
+import NoImage from '../../no_image.png';
 
 import './KarinaCard.css';
 import { useCookies } from 'react-cookie';

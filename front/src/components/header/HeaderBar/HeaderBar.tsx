@@ -50,23 +50,23 @@ export default function HeaderBar() {
       <div className="right-side-bar">
         <Stack className="search_wrap" marginEnd={20} spacing={10} h={50} direction={'row'}>
           <Input
-              className="search_input"
-              w={'100%'}
-              h={30}
-              placeholder="Поиск"
-              onChange={handleChange}
-              onKeyUp={e => e.key === 'Enter' && handleClick()}
+            className="search_input"
+            w={'100%'}
+            h={30}
+            placeholder="Поиск"
+            onChange={handleChange}
+            onKeyUp={e => e.key === 'Enter' && handleClick()}
           />
           <IconButton
-              aria-label="Search database"
-              onClick={handleClick}
-              h={36}
-              w={36}
-              border={'none'}
-              borderRadius={5}
-              background={'#ff6633'}
-              cursor={'pointer'}
-              type="submit"
+            aria-label="Search database"
+            onClick={handleClick}
+            h={36}
+            w={36}
+            border={'none'}
+            borderRadius={5}
+            background={'#ff6633'}
+            cursor={'pointer'}
+            type="submit"
           >
             <SearchIcon />
           </IconButton>
@@ -80,9 +80,9 @@ export default function HeaderBar() {
             <Button bgcolor={'#ff6633'}>
               <span className='btn-text'>Корзина</span>
               <span className='btn-svg'>
-              <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.29977 5H21L19 12H7.37671M20 16H8L6 3H3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </span>
             </Button>
           </Link>

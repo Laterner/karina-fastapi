@@ -2,7 +2,7 @@ import { Box, Stack } from '@chakra-ui/layout';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import NoImage from '../subcom/no_image.png';
+import NoImage from '../../no_image.png';
 import { ProductPageDataItem, Button } from '../../shared/styledComponents/Buttons';
 
 type ProductPageParams = {
