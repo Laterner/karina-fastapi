@@ -15,9 +15,7 @@ export const CartBarFooter = styled.div`
     h2 {
         margin: 0;
     }
-    //buy-button
     button {
-        width: 200px;
-        height: 50px;
+        width: 100px;
     }
 `;

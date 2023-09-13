@@ -20,12 +20,21 @@ export const ProductPageDataItem = styled.div`
     }
 `;
 
-export const Button = styled.div<{ bgcolor: CSSProperties['backgroundColor'] }>`
+export const Button = styled.div<{width?: CSSProperties['width'], height?: CSSProperties['height'], bgcolor: CSSProperties['backgroundColor'] }>`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 5px 10px;
+    width: ${props => props.width ? props.width + "px" : "auto"};
+    height: ${props => props.height ? props.height + "px" : "auto"};
     background-color: ${props => props.bgcolor};
     border-radius: 5px;
     font-weight: 800;
     color: white;
+    cursor: pointer;
+    p {
+      margin: 0;
+    }
 `;
 
 export const OutlineButton = styled.div`

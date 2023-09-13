@@ -6,13 +6,17 @@
 .modal {
     position: absolute;
     align-items: center;
-    opacity: 1;
+    opacity: 0;
     display: flex;
     height: 50px;
     left: -15px;
     background-color: white;
     box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2),0 8px 10px 1px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12);
     border-radius: 5px;
+}
+.modal.visible {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 .modal-content a {
     padding: 0 10px;

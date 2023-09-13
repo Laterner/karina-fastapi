@@ -5,45 +5,49 @@
     flex-direction: column;
     padding: 20px;
 }
-
 .avatar img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
 }
-
 .info {
     margin-top: 20px;
     text-align: center;
 }
-
 h2 {
     font-size: 24px;
     margin-bottom: 10px;
 }
-
 p {
     font-size: 16px;
     margin-bottom: 10px;
 }
-
 h3 {
     font-size: 18px;
     margin-bottom: 10px;
 }
-
 ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
-
 li {
     font-size: 14px;
     margin-bottom: 5px;
 }
-
+.buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin-right: 20px;
+}
+.buttons p {
+    font-weight: 600;
+    color: white;
+}
 .logout-button {
     padding: 10px 20px;
     background-color: #f44336;
@@ -53,11 +57,14 @@ li {
     font-size: 16px;
     cursor: pointer;
 }
-
 .logout-button:hover {
     background-color: #d32f2f;
+    transition: background-color 0.2s ease-in-out;
 }
-
 .logout-button:focus {
     outline: none;
+}
+.to-orders-button:hover {
+    background-color: #ff6633;
+    transition: background-color 0.2s ease-in-out;
 }

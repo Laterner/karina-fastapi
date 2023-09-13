@@ -34,15 +34,13 @@ const NavigationBlock: React.FC = () => {
         <img src="/src/no_image.png" alt="User Avatar" />
         <span>Диджей</span>
       </div>
-      {isModalOpen && (
-        <div className="modal" ref={modalRef}>
-          <div className="modal-content">
-            <Link to="/profile/1" onClick={closeModal}>
+      <div className={`modal ${isModalOpen ? 'visible' : ''}`} ref={modalRef}>
+        <div className="modal-content">
+          <Link to="/profile/1" onClick={closeModal}>
               Личный Кабинет
-            </Link>
-          </div>
+          </Link>
         </div>
-      )}
+      </div>
     </div>
   );
 };

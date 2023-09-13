@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import './UserProfile.css'
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {Button, CardButton} from "../../shared/styledComponents/Buttons";
 
 interface User {
     name: string;
@@ -33,16 +34,16 @@ const UserProfile: React.FC = () => {
         {/*<p>Баланс: {user.balance}</p>*/}
         <h2>Диджей</h2>
         <p>Баланс: 10000</p>
-        <h3>История заказов:</h3>
         <ul>
           {/*{user.orders.map((order, index) => (*/}
           {/*    <li key={index}>{order}</li>*/}
           {/*))}*/}
         </ul>
       </div>
-      <button className="logout-button">
-                Выйти
-      </button>
+      <div className="buttons">
+          <Button height={40} bgcolor={'#ff9a78'} className='to-orders-button'><Link to='/orders'><p>История заказов</p></Link></Button>
+          <Button height={40} bgcolor={'#ff6161'} className='logout-button'><p>Выйти</p></Button>
+      </div>
     </div>
   );
 };
