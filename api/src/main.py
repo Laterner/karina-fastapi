@@ -47,6 +47,10 @@ def products_category(category: str, page: int = 1):
     page = 1 if page <= 0 else page
     return db.get_products_by_category(category, page)
 
+@app.get("/product/{id}")
+def get_one_product(id: int):
+    return db.get_one_product(id)
+
 @app.get("/cart/")
 def cart(uuid: str):
     return db.get_from_cart(uuid)

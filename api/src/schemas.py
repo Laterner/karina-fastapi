@@ -174,6 +174,15 @@ def get_products_by_category(category: str, page: int, cursor: cursor_type):
     
     return res
 
+@db_connencion
+def get_one_product(id: int, cursor: cursor_type):
+    return {
+    "id": 1,
+    "name": " Книга учета А4 160 л. глянцевая ламинация",
+    "category": "{notebooks}",
+    "price": 210
+  }
+
 if __name__ == "__main__":
     el = {'id':'asd'}
     # print(
