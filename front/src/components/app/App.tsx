@@ -9,6 +9,7 @@ import CartPage from '../../pages/CartPage/CartPage';
 import ProductPage from '../../pages/ProductPage/ProductPage';
 import AdminPanel from '../adminPanel/adminPanel';
 import UserProfile from "../UserProfile/UserProfile";
+import Orders from "../Orders/Orders";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/profile/:userId" element={<UserProfile />}/>
+          <Route path="/orders" element={<Orders />}></Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
