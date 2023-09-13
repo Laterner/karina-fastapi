@@ -176,12 +176,12 @@ def get_products_by_category(category: str, page: int, cursor: cursor_type):
 
 @db_connencion
 def get_one_product(id: int, cursor: cursor_type):
-    return {
-    "id": 1,
-    "name": " Книга учета А4 160 л. глянцевая ламинация",
-    "category": "{notebooks}",
-    "price": 210
-  }
+    cursor.execute(f"SELECT id, name, price FROM products WHERE id = '{id}';")
+    
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()][0]
+    # res = if res['type'] == 'error'
+    return res
 
 if __name__ == "__main__":
     el = {'id':'asd'}
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     # )
 
     # print(add_to_cart('uuid-asd', 12, 2))
-    print(delete_from_cart('uuid-asd', 12))
+    print(get_one_product(1))
 
     # SELECT title || ' ' ||  author || ' ' ||  abstract || ' ' || body AS document
     # FROM messages
