@@ -39,6 +39,7 @@ export const CardButton = styled.button<{ color: CSSProperties['backgroundColor'
     font-weight: 400;
     font-size: 17px;
     padding: 10px;
+    height: 45px;
     margin-left: auto;
     text-align: center;
     border: 1px solid ${props => props.color};

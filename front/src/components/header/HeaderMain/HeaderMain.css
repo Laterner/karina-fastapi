@@ -72,6 +72,9 @@
     align-items: center;
     float: right;
 }
+.info_container p {
+    margin: 0;
+}
 .search_input {
     border: none;
 }
