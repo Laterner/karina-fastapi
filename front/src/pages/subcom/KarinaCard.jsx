@@ -17,7 +17,7 @@ export default function KarinaCard(props) {
     const url = '/add_to_cart/?uuid=';
     const cartId = 'c11589f2-ce86-4691-8953-111a33c4c3e8';
 
-    const product_url = 'product/' + id;
+    const product_url = 'shop/product/' + id;
 
     return (
         <div className="card">
