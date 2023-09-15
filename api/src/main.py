@@ -16,7 +16,7 @@ origins = [
     "http://localhost:80",
     "http://localhost:8888",
     "http://localhost:3000",
-    
+
     "http://185.221.162.85",
     "http://185.221.162.85:80",
     "http://185.221.162.85:8888",
@@ -28,7 +28,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type", "Access-Control-Request-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Authorization", "x-total-count"],
+    allow_headers=["Content-Type", "Access-Control-Request-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Authorization", "X-Total-Count"],
 )
 
 
