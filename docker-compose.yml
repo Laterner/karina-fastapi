@@ -26,24 +26,32 @@ services:
   #   networks:
   #     - karina
 
-  # karina_front:
-  #   container_name: karina_front
-  #   build: ./front
+  karina_front:
+    container_name: karina_front
+    build: ./front
+    networks:
+      - karina
+    ports:
+      - 80:80
+      - 443:443
+
+  # nginx:
+  #   container_name: nginx
+  #   build: ./nginx
+  #   ports:
+  #     - 82:80
   #   networks:
   #     - karina
-  #   ports:
-  #     - 80:80
-  #     # - 443:443
-
+  #   links:
+  #     - karina_front
+  
   karina_admin:
     container_name: karina_admin
     build: ./admin-panel
     networks:
       - karina
     ports:
-      - 80:80
+      - 8888:80
 
-# volumes:
-#   postgres_data:
 networks:
   karina:
