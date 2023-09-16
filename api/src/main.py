@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 
 import schemas as db
-from uuid import uuid4
 
 
 app = FastAPI(debug=True)
@@ -36,6 +35,10 @@ app.add_middleware(
 def read_root():
     return RedirectResponse("/docs")
 
+@app.get("/errconn")
+def errconn():
+    return db.errconn()
+
 @app.get("/products_count")
 def products_count():
     return db.get_products_count()
@@ -43,11 +46,10 @@ def products_count():
 @app.get("/products")
 def products(page: int = 1):
     page = 1 if page <= 0 else page
-    return db.get_products(page)
-
-@app.get("/errconn")
-def errconn():
-    return db.errconn()
+    
+    content = db.get_products(page)
+    headers = {"X-Total-Count": "10", "Content-Language": "ru-RU"}
+    return JSONResponse(content=content, headers=headers)
 
 @app.get("/search")
 def search(request: str, page: int = 1):
