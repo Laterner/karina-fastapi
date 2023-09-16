@@ -53,7 +53,7 @@ def products(page: int = 1):
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_products')
-def get_all_products(_order: str, _start: int):
+def get_all_products(_order: str = 'ASC', _start: int = 0):
     _start = 1 if _start <= 0 else _start
     
     content = db.get_all_products(_order, _start)
@@ -63,7 +63,7 @@ def get_all_products(_order: str, _start: int):
 
 @app.get('/search')
 def search(request: str, page: int = 1):
-    page = 1 if page <= 0 else page
+    page = 0 if page <= 0 else page
     return db.search(request, page)
 
 # @app.get('/products/{category}')
