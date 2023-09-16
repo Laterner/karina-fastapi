@@ -41,8 +41,8 @@ const UserProfile: React.FC = () => {
         </ul>
       </div>
       <div className="buttons">
-          <Button height={40} bgcolor={'#ff9a78'} className='to-orders-button'><Link to='/orders'><p>История заказов</p></Link></Button>
-          <Button height={40} bgcolor={'#ff6161'} className='logout-button'><p>Выйти</p></Button>
+        <Button height={40} bgcolor={'#ff9a78'} className='to-orders-button'><Link to='/orders'><p>История заказов</p></Link></Button>
+        <Button height={40} bgcolor={'#ff6161'} className='logout-button'><p>Выйти</p></Button>
       </div>
     </div>
   );

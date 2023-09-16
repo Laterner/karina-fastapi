@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/layout';
-import { redirectToOrdersMonitoring, universalRedirect } from '../routing';
+import { universalRedirect } from '../routing';
 import './HeaderMenu.css';
 export default function HeaderMenu() {
     return (

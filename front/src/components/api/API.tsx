@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+export const API_URL = 'http://185.221.162.85:8000';
 
-const API_URL = 'http://185.221.162.85:8000';
 const promiseWrapper: any = (promise: Promise<any>) => {
   let status = 'pending';
   let result: any;

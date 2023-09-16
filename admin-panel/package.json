@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@chakra-ui/layout": "^2.3.1",
-    "ra-data-fakerest": "^4.13.0",
+    "ra-data-json-server": "^4.14.0",
     "react": "^18.2.0",
     "react-admin": "^4.13.0",
     "react-dom": "^18.2.0"

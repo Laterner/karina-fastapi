@@ -1,29 +1,40 @@
 import {
-  Admin,
-  Resource,
-  ListGuesser,
-  EditGuesser,
-  ShowGuesser,
+    Admin,
+    Resource,
+    EditGuesser,
+    ShowGuesser,
 } from "react-admin";
-import { dataProvider } from "./dataProvider";
-import { authProvider } from "./authProvider";
 import HeaderMenu from "./header/HeaderMenu";
+import jsonServerProvider from "ra-data-json-server";
+import ProductList from "./ProductList";
+import ProductCreate from "./ProductCreate";
+import UserList from "./UserList";
+import UserIcon from "@mui/icons-material/Group";
+import {Dashboard} from "./Dashboard";
+import authProvider from "./authProvider";
 
 export const App = () => (
   <>
       <HeaderMenu/>
-      <Admin dataProvider={dataProvider} authProvider={authProvider}>
+      <Admin
+          dataProvider={jsonServerProvider('http://185.221.162.85:8000')}
+          dashboard={Dashboard}
+          authProvider={authProvider}
+      >
+          {/*продукты в будущем*/}
           <Resource
-              name="posts"
-              list={ListGuesser}
+              name="products"
+              list={ProductList}
               edit={EditGuesser}
               show={ShowGuesser}
+              create={ProductCreate}
           />
+          {/*пользователи*/}
           <Resource
-              name="comments"
-              list={ListGuesser}
-              edit={EditGuesser}
+              name="users"
+              list={UserList}
               show={ShowGuesser}
+              icon={UserIcon}
           />
       </Admin>
   </>

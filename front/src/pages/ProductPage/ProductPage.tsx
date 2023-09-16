@@ -32,8 +32,8 @@ export default function ProductPage() {
       return <PageNotFound />;
     } else if (product) {
       return (
-          <>
-            <Box w="100%">one s {productId} page</Box><Box w="100%">
+        <>
+          <Box w="100%">one s {productId} page</Box><Box w="100%">
             <h3>{product.name}</h3>
           </Box><Stack direction={'row'}>
             <Box background={'red'} boxSize={350}>
@@ -42,15 +42,15 @@ export default function ProductPage() {
             <Box w={'calc(100% - 400px)'} p={20}>
               <Box h={'calc(100% - 20px)'}>
                 {productDataItems.map((el, idx) => (
-                    <ProductPageDataItem key={idx}>
-                      <ProductPageDataItem>
-                        {el}:
-                        <span>
-                    <p/>
-                  </span>
-                      </ProductPageDataItem>
-                      {productDataValues[idx]}
+                  <ProductPageDataItem key={idx}>
+                    <ProductPageDataItem>
+                      {el}:
+                      <span>
+                        <p/>
+                      </span>
                     </ProductPageDataItem>
+                    {productDataValues[idx]}
+                  </ProductPageDataItem>
                 ))}
               </Box>
               <Stack direction={'row'}>
@@ -59,7 +59,7 @@ export default function ProductPage() {
               </Stack>
             </Box>
           </Stack>
-          </>
+        </>
       );
     } else {
       return null;
@@ -81,6 +81,6 @@ export default function ProductPage() {
   }, [product]);
 
   return (
-      <>{renderContent()}</>
+    <>{renderContent()}</>
   );
 }
