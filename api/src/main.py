@@ -54,6 +54,8 @@ def products(page: int = 1):
 
 @app.get('/get_all_products')
 def get_all_products(_order: str, _start: int):
+    _start = 1 if _start <= 0 else _start
+    
     content = db.get_all_products(_order, _start)
     headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
     print(content)
