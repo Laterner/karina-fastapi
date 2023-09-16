@@ -27,7 +27,7 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type", "Access-Control-Request-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Authorization", "X-Total-Count"],
+    allow_headers=["Content-Type", "Access-Control-Request-Headers", " Access-Control-Expose-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Authorization", "X-Total-Count"],
 )
 
 
@@ -48,7 +48,7 @@ def products(page: int = 1):
     page = 1 if page <= 0 else page
     
     content = db.get_products(page)
-    headers = {"X-Total-Count": "10", "Content-Language": "ru-RU"}
+    headers = {"X-Total-Count": str(content.__len__()), "Content-Language": "ru-RU"}
     return JSONResponse(content=content, headers=headers)
 
 @app.get("/search")
@@ -76,3 +76,10 @@ def add_to_cart(uuid: str, product_id: int, count: int):
 @app.post("/delete_from_cart")
 def delete_from_cart(uuid: str, product_id: int):
     return db.delete_from_cart(uuid, product_id)
+
+@app.post('/login')
+def login_user(login: str, password: str):
+    if login == 'admin' and password == 'admin':
+        return {'data': 'uuid_user_lol'}
+    else:
+        return {'data': 'failed'}
