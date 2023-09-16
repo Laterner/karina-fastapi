@@ -33,17 +33,27 @@ services:
   #     - karina
   #   ports:
   #     - 80:80
-  #     # - 443:443
+  #     - 443:443
 
-  karina_admin:
-    container_name: karina_admin
-    build: ./admin-panel
-    networks:
-      - karina
-    ports:
-      - 80:80
+  # nginx:
+  #   container_name: nginx
+  #   build: ./nginx
+  #   ports:
+  #     - 82:80
+  #   networks:
+  #     - karina
+  #   links:
+  #     - karina_front
+  
+  # karina_admin:
+  #   container_name: karina_admin
+  #   build: ./admin-panel
+  #   networks:
+  #     - karina
+  #   ports:
+  #     - 8888:80
+  #   depends_on: 
+  #     - karina_front
 
-# volumes:
-#   postgres_data:
 networks:
   karina:

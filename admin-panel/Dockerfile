@@ -3,7 +3,8 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install -g 
+RUN npm install
+
 RUN npm run build
 
 FROM nginx:stable-alpine
