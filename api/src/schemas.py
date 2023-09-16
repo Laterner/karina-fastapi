@@ -77,7 +77,16 @@ def init_database():
 ################################## переписал
 @db_connencion
 def get_products(page: int, cursor: cursor_type ) -> list:
-    cursor.execute(f'SELECT id, name, category, price FROM products ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};')
+    cursor.execute(f'SELECT id, name, price FROM products ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};')
+    
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
+
+@db_connencion
+def get_all_products(_order: str, _start: int, cursor: cursor_type ) -> list:
+    cursor.execute(f'SELECT id, name, price FROM products ORDER BY id LIMIT 10 OFFSET {(_start + 10)};')
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()]

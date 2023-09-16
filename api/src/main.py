@@ -52,15 +52,21 @@ def products(page: int = 1):
     headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
     return JSONResponse(content=content, headers=headers)
 
+@app.get('/get_all_products')
+def get_all_products(_order: str, _start: int,):
+    content = db.get_products()
+    headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
+    return JSONResponse(content=content, headers=headers)
+
 @app.get('/search')
 def search(request: str, page: int = 1):
     page = 1 if page <= 0 else page
     return db.search(request, page)
 
-@app.get('/products/{category}')
-def products_category(category: str, page: int = 1):
-    page = 1 if page <= 0 else page
-    return db.get_products_by_category(category, page)
+# @app.get('/products/{category}')
+# def products_category(category: str, page: int = 1):
+#     page = 1 if page <= 0 else page
+#     return db.get_products_by_category(category, page)
 
 @app.get('/product/{id}')
 def get_one_product(id: int):
