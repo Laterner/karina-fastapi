@@ -54,16 +54,16 @@ def products(page: int = 1):
 
 @app.get('/get_all_products')
 def get_all_products(_order: str = 'ASC', _start: int = 0):
-    _start = 1 if _start <= 0 else _start
+    _start = 0 if _start < 0 else _start
     
     content = db.get_all_products(_order, _start)
-    headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
+    headers = {'X-Total-Count': str(db.get_products_count()), 'Content-Language': 'ru-RU'}
     print(content)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/search')
 def search(request: str, page: int = 1):
-    page = 0 if page <= 0 else page
+    page = 1 if page <= 0 else page
     return db.search(request, page)
 
 # @app.get('/products/{category}')
