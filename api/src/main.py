@@ -53,9 +53,10 @@ def products(page: int = 1):
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_products')
-def get_all_products(_order: str, _start: int,):
-    content = db.get_products()
+def get_all_products(_order: str, _start: int):
+    content = db.get_all_products(_order, _start)
     headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
+    print(content)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/search')
