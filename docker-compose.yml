@@ -14,7 +14,7 @@ services:
     networks:
       - karina
 
-  # db:
+  # karina_db:
   #   image: postgres:12.1-alpine
   #   container_name: karina_db
   #   volumes:
@@ -34,7 +34,7 @@ services:
     ports:
       - 80:80
       - 443:443
-  depends_on: 
+    depends_on: 
       - karina_api
 
   # nginx:
@@ -55,7 +55,6 @@ services:
     ports:
       - 8888:80
     depends_on: 
-      - karina_api
       - karina_front
 
 networks:
