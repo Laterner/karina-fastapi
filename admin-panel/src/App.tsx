@@ -24,7 +24,6 @@ export const App = () => (
           theme={defaultTheme}
           darkTheme={{ palette: { mode: 'dark' } }}
       >
-          {/*продукты в будущем*/}
           <Resource
               name="get_all_products"
               options={{ label: 'Products' }}
@@ -34,7 +33,6 @@ export const App = () => (
               create={ProductCreate}
               icon={DataIcon}
           />
-          {/*пользователи*/}
           <Resource
               name="users"
               list={UserList}

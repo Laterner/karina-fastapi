@@ -1,5 +1,11 @@
+@media(max-width: 1000px) {
+    .cabinet-block {
+        top: 50px;
+    }
+}
+
 .cabinet-block {
-    right: 40px;
+    right: 30px;
     position: absolute;
     cursor: pointer;
 }
