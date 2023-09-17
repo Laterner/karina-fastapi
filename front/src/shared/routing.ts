@@ -4,7 +4,7 @@ const redirect = (url: any) => {
 
 export const redirectToOrdersMonitoring = () => {
   if (window.location.hostname === 'localhost') {
-    redirect(`http://localhost:8888/`)
+    redirect(`http://localhost:8888/backend/admin`)
   } else {
     redirect(`../`)
   }

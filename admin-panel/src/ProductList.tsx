@@ -17,7 +17,6 @@ const ProductList = () => {
             <Datagrid rowClick="show">
                 <TextField source="id" />
                 <TextField source="name" />
-                <TextField source="category" />
                 <TextField source="price" />
                 <TextField source="count" />
                 <EditButton />

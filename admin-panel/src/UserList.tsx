@@ -4,7 +4,6 @@ import {Datagrid, EditButton, EmailField, List, ReferenceInput, TextField, TextI
 const postFilters = [
     <TextInput source="q" label="Search" alwaysOn />,
 ];
-
 const UserList = () => {
     return (
         <List filters={postFilters}>
