@@ -47,16 +47,16 @@ services:
   #   links:
   #     - karina_front
   
-  karina_admin:
-    container_name: karina_admin
-    mem_limit: 300m
-    build: ./admin-panel
-    networks:
-      - karina
-    ports:
-      - 8888:80
-    depends_on: 
-      - karina_front
+  # karina_admin:
+  #   container_name: karina_admin
+  #   mem_limit: 300m
+  #   build: ./admin-panel
+  #   networks:
+  #     - karina
+  #   ports:
+  #     - 8888:80
+  #   depends_on: 
+  #     - karina_front
 
 networks:
   karina:
