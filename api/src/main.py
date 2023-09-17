@@ -38,6 +38,7 @@ app.add_middleware(
     allow_headers=['Content-Type', 'Access-Control-Request-Headers', ' Access-Control-Expose-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Origin', 'Authorization'],
 )
 
+headers = {'X-Total-Count': str(db.get_products_count()), 'Content-Language': 'ru-RU'}
 
 @app.get('/')
 def read_root():
@@ -49,29 +50,27 @@ def errconn():
 
 @app.get('/products_count')
 def products_count():
-    return db.get_products_count()
+    content: int = db.get_products_count()
+    
+    return JSONResponse(content=content, headers=headers)
 
 @app.get('/products')
 def products(page: int = 1):
     page = 1 if page <= 0 else page
-    
-    content = db.get_products(page)
-    headers = {'X-Total-Count': str(content.__len__()), 'Content-Language': 'ru-RU'}
+    content: list = db.get_products(page)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_products')
 def get_all_products(_order: str = 'ASC', _start: int = 0):
     _start = 0 if _start < 0 else _start
-    
-    content = db.get_all_products(_order, _start)
-    headers = {'X-Total-Count': str(db.get_products_count()), 'Content-Language': 'ru-RU'}
-    print(content)
+    content: list = db.get_all_products(_order, _start)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/search')
 def search(request: str, page: int = 1):
     page = 1 if page <= 0 else page
-    return db.search(request, page)
+    content: list = db.search(request, page)
+    return JSONResponse(content=content, headers=headers)
 
 # @app.get('/products/{category}')
 # def products_category(category: str, page: int = 1):

@@ -97,7 +97,7 @@ def errconn() -> object:
     return {'data':'connection lost', 'type': 'error'}
 
 @db_connencion
-def get_products_count(cursor: cursor_type) -> list:
+def get_products_count(cursor: cursor_type) -> int:
     cursor.execute('SELECT COUNT(*) FROM products;')
     print('type: ', type(cursor))
     return cursor.fetchone()[0]
