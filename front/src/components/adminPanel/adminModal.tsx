@@ -2,7 +2,8 @@ import { Modal } from '@chakra-ui/react';
 
 import { Button } from '../../shared/styledComponents/Buttons';
 
-import { ModalContainer, ModalBackground, ModalFooter, ModalTitle, ModalBody, Input } from './adminModal.styled';
+import { ModalContainer, ModalBackground, ModalFooter, ModalTitle, ModalBody } from './adminModal.styled';
+import {Input} from "../../shared/styledComponents/Inputs";
 
 interface IAdminModalProps {
     titleType: string;

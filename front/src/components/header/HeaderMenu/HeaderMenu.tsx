@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import { redirectToOrdersMonitoring } from '../../../shared/routing';
 import CabinetBlock from "../CabinetBlock/CabinetBlock";
 
-export default function HeaderMenu() {
+interface IProps {
+  auth: boolean
+}
+
+export default function HeaderMenu({auth}: IProps) {
   return (
     <Box w="100%" mt={10} mb={10} className='menu-container'>
       <ul className="menu-main">
@@ -23,7 +27,7 @@ export default function HeaderMenu() {
           <a href='#' onClick={() => redirectToOrdersMonitoring()}>Admin Panel</a>
         </li>
       </ul>
-      <CabinetBlock/>
+      <CabinetBlock auth={auth}/>
     </Box>
   );
 }

@@ -25,6 +25,7 @@ export const Button = styled.div<{width?: CSSProperties['width'], height?: CSSPr
     align-items: center;
     justify-content: center;
     padding: 5px 10px;
+    border: none;
     width: ${props => props.width ? props.width + "px" : "auto"};
     height: ${props => props.height ? props.height + "px" : "auto"};
     background-color: ${props => props.bgcolor};
