@@ -41,60 +41,60 @@ app.add_middleware(
 headers = {'X-Total-Count': str(db.get_products_count()), 'Content-Language': 'ru-RU'}
 
 @app.get('/')
-def read_root():
+async def read_root():
     return RedirectResponse('/docs')
 
 @app.get('/errconn')
-def errconn():
-    return db.errconn()
+async def errconn():
+    return await db.errconn()
 
 @app.get('/products_count')
-def products_count():
-    content: int = db.get_products_count()
+async def products_count():
+    content: int = await db.get_products_count()
     
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/products')
-def products(page: int = 1):
+async def products(page: int = 1):
     page = 1 if page <= 0 else page
-    content: list = db.get_products(page)
+    content: list = await db.get_products(page)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_products')
-def get_all_products(_order: str = 'ASC', _start: int = 0):
+async def get_all_products(_order: str = 'ASC', _start: int = 0):
     _start = 0 if _start < 0 else _start
-    content: list = db.get_all_products(_order, _start)
+    content: list = await db.get_all_products(_order, _start)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/search')
-def search(request: str, page: int = 1):
+async def search(request: str, page: int = 1):
     page = 1 if page <= 0 else page
-    content: list = db.search(request, page)
+    content: list = await db.search(request, page)
     return JSONResponse(content=content, headers=headers)
 
 # @app.get('/products/{category}')
-# def products_category(category: str, page: int = 1):
+# async def products_category(category: str, page: int = 1):
 #     page = 1 if page <= 0 else page
-#     return db.get_products_by_category(category, page)
+#     return await db.get_products_by_category(category, page)
 
 @app.get('/product/{id}')
-def get_one_product(id: int):
-    return db.get_one_product(id)
+async def get_one_product(id: int):
+    return await db.get_one_product(id)
 
 @app.get('/cart/')
-def cart(uuid: str):
-    return db.get_from_cart(uuid)
+async def cart(uuid: str):
+    return await db.get_from_cart(uuid)
 
 @app.post('/add_to_cart')
-def add_to_cart(uuid: str, product_id: int, count: int):
-    return db.add_to_cart(uuid, product_id, count)
+async def add_to_cart(uuid: str, product_id: int, count: int):
+    return await db.add_to_cart(uuid, product_id, count)
 
 @app.post('/delete_from_cart')
-def delete_from_cart(uuid: str, product_id: int):
-    return db.delete_from_cart(uuid, product_id)
+async def delete_from_cart(uuid: str, product_id: int):
+    return await db.delete_from_cart(uuid, product_id)
 
 @app.post('/login_user')
-def login_user(login: str, password: str):
+async def login_user(login: str, password: str):
     if login == 'admin' and password == 'admin':
         return {'data': 'uuid_user_lol'}
     else:
