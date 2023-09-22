@@ -26,38 +26,41 @@ services:
   #   networks:
   #     - karina
 
-  karina_front:
-    container_name: karina_front
-    build: ./front
-    networks:
-      - karina
-    ports:
-      - 80:80
-      - 443:443
-      - 8888:8888
-    depends_on: 
-      - karina_api
-
-  # nginx:
-  #   container_name: nginx
-  #   build: ./nginx
-  #   ports:
-  #     - 82:80
-  #   networks:
-  #     - karina
-  #   links:
-  #     - karina_front
+  # karina_front:
+  #   container_name: karina_front
+  #   build: ./front
+  #   depends_on: 
+  #     - karina_api
+  #   volumes:
+  #     - site:/app/dist
   
   # karina_admin:
   #   container_name: karina_admin
   #   # mem_limit: 300m
   #   build: ./admin-panel
-  #   networks:
-  #     - karina
-  #   ports:
-  #     - 8888:80
+  #   volumes:
+  #     - admin:/app/dist
   #   depends_on: 
   #     - karina_front
 
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    volumes:
+      - site:/usr/share/nginx/html/site
+      - admin:/usr/share/nginx/html/admin
+    ports:
+      - 80:80
+    networks:
+      - karina
+    # depends_on: 
+    #   - karina_admin
+
 networks:
   karina:
+
+volumes:
+  site:
+    driver: local 
+  admin:
+    driver: local 

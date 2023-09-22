@@ -10,7 +10,7 @@ import ProductList from "./ProductList";
 import ProductCreate from "./ProductCreate";
 import UserList from "./UserList";
 import UserIcon from "@mui/icons-material/Group";
-import DataIcon from "@mui/icons-material/DataSet";
+// import DataIcon from "@mui/icons-material/DataSet";
 import {Dashboard} from "./Dashboard";
 import authProvider from "./authProvider";
 
@@ -31,7 +31,7 @@ export const App = () => (
               edit={EditGuesser}
               show={ShowGuesser}
               create={ProductCreate}
-              icon={DataIcon}
+            //   icon={DataIcon}
           />
           <Resource
               name="users"

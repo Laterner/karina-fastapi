@@ -5,13 +5,3 @@ ADD package*.json ./
 RUN npm install --only=prod
 COPY . /app
 RUN npm run build
-
-# COPY . /usr/share/nginx/html
-
-FROM nginx:stable-alpine
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
-# COPY ./nginx/index.html /usr/share/nginx/html/site/index.html
-COPY ./nginx/html /usr/share/nginx/html/admin
-
-CMD ["nginx", "-g", "daemon off;"]
