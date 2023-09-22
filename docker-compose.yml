@@ -53,8 +53,8 @@ services:
       - 80:80
     networks:
       - karina
-    # depends_on: 
-    #   - karina_admin
+    depends_on: 
+      - karina_admin
 
 networks:
   karina:
