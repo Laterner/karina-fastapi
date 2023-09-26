@@ -18,7 +18,7 @@ export const App = () => (
   <>
       <HeaderMenu/>
       <Admin
-          dataProvider={jsonServerProvider('http://localhost:8000')}
+          dataProvider={jsonServerProvider('http://localhost/admin')}
           dashboard={Dashboard}
           authProvider={authProvider}
           theme={defaultTheme}
@@ -31,7 +31,7 @@ export const App = () => (
               edit={EditGuesser}
               show={ShowGuesser}
               create={ProductCreate}
-            //   icon={DataIcon}
+              // icon={DataIcon}
           />
           <Resource
               name="users"
