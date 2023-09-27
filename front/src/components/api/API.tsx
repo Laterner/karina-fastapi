@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-export const API_URL = 'http://185.221.162.85:8000';
+export const API_URL = import.meta.env.VITE_API_HOSTNAME;
 
 const promiseWrapper: any = (promise: Promise<any>) => {
   let status = 'pending';
