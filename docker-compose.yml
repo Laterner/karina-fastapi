@@ -26,13 +26,15 @@ services:
   #   networks:
   #     - karina
 
-  # karina_front:
-  #   container_name: karina_front
-  #   build: ./front
-  #   depends_on: 
-  #     - karina_api
-  #   volumes:
-  #     - site:/app/dist
+  karina_front:
+    container_name: karina_front
+    build: ./front
+    env_file:
+      - .env
+    # depends_on: 
+    #   - karina_api
+    volumes:
+      - site:/app/dist
   
   # karina_admin:
   #   container_name: karina_admin
@@ -53,8 +55,8 @@ services:
       - 80:80
     networks:
       - karina
-    depends_on: 
-      - karina_admin
+    # depends_on: 
+    #   - karina_admin
 
 networks:
   karina:

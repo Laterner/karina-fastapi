@@ -3,7 +3,7 @@ import init_db
 from psycopg2.extensions import cursor as cursor_type
 from hashlib import sha256
 from database import db_connencion 
-
+# from models import Product
 
 @db_connencion
 def update_role(id: int, role: str, cursor: cursor_type) -> None:
@@ -11,7 +11,7 @@ def update_role(id: int, role: str, cursor: cursor_type) -> None:
             (role, id)
     )
         
-    return 'updated'
+    return ('updated', cursor.statusmessage)
 
 @db_connencion
 def reg_user(firstname: str, lastname: str, email: str, password: str, cursor: cursor_type) -> None:
@@ -77,7 +77,7 @@ def init_database():
 ################################## переписал
 @db_connencion
 def get_products(page: int, cursor: cursor_type ) -> list:
-    cursor.execute(f'SELECT id, name, price FROM products ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};')
+    cursor.execute(f'SELECT id, name, price, is_active FROM products WHERE is_active=true ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};')
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()]
@@ -95,6 +95,25 @@ def get_all_products(_order: str, _start: int, cursor: cursor_type ) -> list:
 
 def errconn() -> object:    
     return {'data':'connection lost', 'type': 'error'}
+
+@db_connencion
+def delete_product(uuid: str, product_id: int, cursor: cursor_type):
+    cursor.execute("UPDATE products SET is_active=%s WHERE id=%s;",
+            (False, product_id)
+    )
+    exe_status = cursor.statusmessage
+
+    return uuid, 
+
+@db_connencion
+def activate_product(uuid: str, product_id: int, cursor: cursor_type):
+    cursor.execute("UPDATE products SET is_active=%s WHERE id=%s;",
+            (True, product_id)
+    )
+    exe_status = cursor.statusmessage
+
+    return uuid, exe_status
+
 
 @db_connencion
 def get_products_count(cursor: cursor_type) -> int:
@@ -169,7 +188,7 @@ def get_from_cart(uuid: str, cursor: cursor_type):
 
 @db_connencion
 def search(request: str, page: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, category, price FROM products WHERE name @@ '{request}' ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
+    cursor.execute(f"SELECT id, name, is_active, price FROM products WHERE name @@ '{request}' AND is_active=true  ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
     
     return [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()]
@@ -200,7 +219,7 @@ if __name__ == "__main__":
     # )
 
     # print(add_to_cart('uuid-asd', 12, 2))
-    print(get_one_product(1))
+    print(delete_product('1', 1))
 
     # SELECT title || ' ' ||  author || ' ' ||  abstract || ' ' || body AS document
     # FROM messages

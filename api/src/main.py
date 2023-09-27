@@ -88,6 +88,14 @@ def search(request: str, page: int = 1):
 def get_one_product(id: int):
     return  db.get_one_product(id)
 
+@app.post('/delete_product')
+def delete_product(uuid: str, product_id: int):
+    return  db.delete_product(uuid, product_id)
+
+@app.post('/activate_product')
+def activate_product(uuid: str, product_id: int):
+    return  db.activate_product(uuid, product_id)
+
 @app.get('/cart/')
 def cart(uuid: str):
     return  db.get_from_cart(uuid)

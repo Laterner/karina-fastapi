@@ -10,18 +10,19 @@ def get_db_connection():
             password=SERVER_PASSWORD,
             host=SERVER_HOSTNAME,
         )
-        return connection
+        return (connection, 'successful')
 
     except psycopg2.OperationalError as e:
         print("Help me, I'm falled!!")
         print(f"The error '{e}' occurred")
 
-        return None
+        return (None, 'connection error')
 
     
 def db_connencion(func):
     def wraper(*args):
-        conn = get_db_connection()
+        conn, status = get_db_connection()
+        
 
         if conn == None:
             return {'data':'connection lost', 'type': 'error'}
@@ -32,7 +33,12 @@ def db_connencion(func):
             function_resault = func(*args, cursor)
 
         except Exception as ex:
-            function_resault = {'data':ex, 'type': 'error'}
+            function_resault = {'data':
+                                { 
+                                    'error': ex, 
+                                    'status':status 
+                                }, 
+                                'type': 'error'}
         
         conn.commit()
 
