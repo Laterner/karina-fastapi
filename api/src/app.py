@@ -90,7 +90,9 @@ def products(page: int = 1):
     content: list = db.get_products(page)
     return JSONResponse(content=content, headers=headers)
 
+
 @app.get('/product/{id}', tags=['products'])
+@app.get('/get_all_products/{id}', tags=['products'])
 def get_one_product(id: int):
     content = db.get_one_product(id)
     return JSONResponse(content=content, headers=headers)
@@ -101,6 +103,12 @@ def get_all_products(_order: str = 'ASC', _start: int = 0):
     _start = 0 if _start < 0 else _start
     content: list = db.get_all_products(_order, _start)
     return JSONResponse(content=content, headers=headers)
+
+# @app.get('/get_all_products', tags=['products'])
+# def get_one_product(id: int):
+#     content = db.get_one_product(id)
+#     return JSONResponse(content=content, headers=headers)
+
 
 @app.get('/search', tags=['products'])
 def search(request: str, page: int = 1):
