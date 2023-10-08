@@ -34,41 +34,6 @@ def reg_user(firstname: str, lastname: str, email: str, password: str, cursor: c
     
     return {'data': 'reged'}
 
-@db_connencion
-def reg_request(firstname: str, lastname: str, email: str, station: str, request_text: str, cursor: cursor_type):
-    cursor.execute('INSERT INTO requests \
-            ( firstname, lastname, email, station, request_text)'
-            'VALUES (%s, %s, %s, %s, %s);',
-            (
-                firstname, 
-                lastname, 
-                email, 
-                station,
-                request_text
-            )
-    )
-    
-    return 'reged'
-
-@db_connencion
-def login_user(email: str, password: str, cursor: cursor_type) -> dict:
-    hashed_password = sha256(password.encode()).hexdigest()
-
-    cursor.execute(f"SELECT id, email FROM users where email='{email}' AND password='{hashed_password}';")
-    publisher_records = cursor.fetchone()
-    
-    if publisher_records == None:
-        return {'data': 'incorrectPassword', 'type': 'error'}
-
-    cursor.execute(f"SELECT id, email FROM users where id={publisher_records[0]} AND role='admin';")
-    publisher_records = cursor.fetchall()
-
-    if publisher_records.__len__() < 1:
-        return {'data': 'notAllowed', 'type': 'error'}
-    else:
-        return {'data': email, 'type': 'successful'}
-
-
 def init_database():
     init_db.init()
 
@@ -174,11 +139,10 @@ def delete_from_cart(uuid: str, product_id: int,  cursor: cursor_type):
 
 @db_connencion
 def get_from_cart(uuid: str, cursor: cursor_type):
-    print(type(uuid), uuid)
     cursor.execute(
-        f"SELECT m.name, m.id, m.price, d.count \
-        FROM products m, carts d \
-        WHERE m.id = d.product_id AND d.uuid = '{uuid}' LIMIT 100;"
+        f"SELECT p.name, p.id, p.price, c.count \
+        FROM products p, carts c \
+        WHERE p.id = c.product_id AND c.uuid = '{uuid}';"
     )
 
     res = [dict((cursor.description[i][0], value) \
@@ -210,6 +174,80 @@ def get_one_product(id: int, cursor: cursor_type):
         for i, value in enumerate(row)) for row in cursor.fetchall()][0]
     # res = if res['type'] == 'error'
     return res
+
+@db_connencion
+def login_user(email: str, password: str, cursor: cursor_type) -> dict:
+    hashed_password = sha256(password.encode()).hexdigest()
+
+    cursor.execute(f"SELECT id, email FROM users where email='{email}' AND password='{hashed_password}';")
+    publisher_records = cursor.fetchone()
+    
+    if publisher_records == None:
+        return {'data': 'incorrectPassword', 'type': 'error'}
+
+    cursor.execute(f"SELECT id, email FROM users where id={publisher_records[0]} AND role='admin';")
+    publisher_records = cursor.fetchall()
+
+    if publisher_records.__len__() < 1:
+        return {'data': 'notAllowed', 'type': 'error'}
+    else:
+        return {'data': email, 'type': 'successful'}
+
+@db_connencion
+def get_orders_by_user(user_uuid: str, cursor: cursor_type):
+    cursor.execute(
+        f"SELECT * FROM orders \
+        WHERE user_uuid = '{user_uuid}';"
+    )
+
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
+
+@db_connencion
+def get_order_items_by_user(order_uuid: str, cursor: cursor_type):
+    cursor.execute(
+        f"SELECT p.name, p.id, p.price, o.count \
+        FROM products p, order_items o \
+        WHERE p.id = o.product_id AND o.order_uuid = '{order_uuid}';"
+    )
+
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
+
+@db_connencion
+def create_order(user_uuid: str, products_in_cart: list[dict], cursor: cursor_type) -> tuple:
+    """create order and return order uuid"""
+    order_uuid = uuid4().__str__()
+
+    for product in products_in_cart:
+        cursor.execute('INSERT INTO order_items \
+                ( order_uuid, product_id, count )'
+                'VALUES (%s, %s, %s);',
+                (
+                    order_uuid, 
+                    product['id'], 
+                    product['count'], 
+                )
+            )
+    
+    cursor.execute('INSERT INTO orders \
+            ( order_uuid, user_uuid, status )'
+            'VALUES (%s, %s, %s);',
+            (
+                order_uuid, 
+                user_uuid, 
+                'created', 
+            )
+        )
+    
+    exe_status = cursor.statusmessage
+
+    return order_uuid, exe_status
+
 
 if __name__ == "__main__":
     el = {'id':'asd'}

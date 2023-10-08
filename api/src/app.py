@@ -53,7 +53,7 @@ def read_root():
 
 @app.get('/errconn')
 def errconn():
-    return  db.errconn()
+    return JSONResponse(content=db.errconn(), headers=headers)
 
 @app.get('/products_count')
 def products_count():
@@ -79,34 +79,50 @@ def search(request: str, page: int = 1):
     content: list = db.search(request, page)
     return JSONResponse(content=content, headers=headers)
 
-# @app.get('/products/{category}')
-# def products_category(category: str, page: int = 1):
-#     page = 1 if page <= 0 else page
-#     return  db.get_products_by_category(category, page)
-
 @app.get('/product/{id}')
 def get_one_product(id: int):
-    return  db.get_one_product(id)
+    content = db.get_one_product(id)
+    return JSONResponse(content=content, headers=headers)
 
 @app.post('/delete_product')
 def delete_product(uuid: str, product_id: int):
-    return  db.delete_product(uuid, product_id)
+    content = db.delete_product(uuid, product_id)
+    return JSONResponse(content=content, headers=headers)
 
 @app.post('/activate_product')
 def activate_product(uuid: str, product_id: int):
-    return  db.activate_product(uuid, product_id)
+    content = db.activate_product(uuid, product_id)
+    return JSONResponse(content=content, headers=headers)
 
 @app.get('/cart/')
 def cart(uuid: str):
-    return  db.get_from_cart(uuid)
+    content = db.get_from_cart(uuid)
+    return JSONResponse(content=content, headers=headers)
 
 @app.post('/add_to_cart')
 def add_to_cart(uuid: str, product_id: int, count: int):
-    return  db.add_to_cart(uuid, product_id, count)
+    content = db.add_to_cart(uuid, product_id, count)
+    return JSONResponse(content=content, headers=headers)
 
 @app.post('/delete_from_cart')
 def delete_from_cart(uuid: str, product_id: int):
-    return  db.delete_from_cart(uuid, product_id)
+    content = db.delete_from_cart(uuid, product_id)
+    return JSONResponse(content=content, headers=headers)
+
+@app.get('/get_orders_by_user')
+def create_order(user_uuid: str):
+    content = db.get_orders_by_user(user_uuid)
+    return JSONResponse(content=content, headers=headers)
+
+@app.get('/get_order_items_by_user')
+def create_order(order_uuid: str):
+    content = db.get_order_items_by_user(order_uuid)
+    return JSONResponse(content=content, headers=headers)
+
+@app.post('/create_order')
+def create_order(user_uuid: str, products_in_cart: list[dict]):
+    content = db.create_order(user_uuid, products_in_cart)
+    return JSONResponse(content=content, headers=headers)
 
 @app.post('/login_user')
 def login_user(login: str, password: str):

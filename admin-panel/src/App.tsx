@@ -18,7 +18,7 @@ export const App = () => (
   <>
       <HeaderMenu/>
       <Admin
-          dataProvider={jsonServerProvider('http://localhost/admin')}
+          dataProvider={jsonServerProvider('http://localhost:8000')}
           dashboard={Dashboard}
           authProvider={authProvider}
           theme={defaultTheme}
