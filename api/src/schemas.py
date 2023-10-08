@@ -219,6 +219,19 @@ def get_order_items_by_order(order_uuid: str, cursor: cursor_type):
     return res
 
 @db_connencion
+def get_orders_by_id(id: int, cursor: cursor_type):
+    cursor.execute(
+        f"SELECT p.name, p.id, p.price, o.count \
+        FROM products p, order_items o \
+        WHERE p.id = o.product_id AND o.id = '{id}';"
+    )
+
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
+
+@db_connencion
 def create_order(user_uuid: str, products_in_cart: list[dict], cursor: cursor_type) -> tuple:
     """create order and return order uuid"""
     order_uuid = uuid4().__str__()

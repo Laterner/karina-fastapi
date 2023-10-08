@@ -152,9 +152,13 @@ def get_all_orders(_order: str = 'ASC', _start: int = 0):
     content: list = db.get_all_orders(_order, _start)
     return JSONResponse(content=content, headers=headers)
 
-@app.get('/get_all_orders/{user_uuid}', tags=['orders'])
+@app.get('/get_all_orders/{id}', tags=['orders'])
+def get_orders_by_id(id: str):
+    content = db.get_orders_by_id(id)
+    return JSONResponse(content=content, headers=headers)
+
 @app.get('/get_orders_by_user', tags=['orders'])
-def create_order(user_uuid: str):
+def get_orders_by_user(user_uuid: str):
     content = db.get_orders_by_user(user_uuid)
     return JSONResponse(content=content, headers=headers)
 
