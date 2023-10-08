@@ -248,6 +248,19 @@ def create_order(user_uuid: str, products_in_cart: list[dict], cursor: cursor_ty
 
     return order_uuid, exe_status
 
+@db_connencion
+def get_all_orders(_order: str, _start: int, cursor: cursor_type ) -> list:
+    cursor.execute(
+        f"SELECT p.name, p.id, p.price, o.count \
+        FROM products p, order_items o \
+        WHERE p.id = o.product_id ORDER BY id LIMIT 10 OFFSET {(_start)};"
+    )
+    cursor.execute(f'SELECT id, name, price FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
+    
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
 
 if __name__ == "__main__":
     el = {'id':'asd'}

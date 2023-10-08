@@ -26,6 +26,7 @@ services:
   #   networks:
   #     - karina
 
+  # TODO: Cheack npm -v
   # karina_front:
   #   container_name: karina_front
   #   mem_limit: 300m
