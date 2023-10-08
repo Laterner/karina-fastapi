@@ -221,15 +221,16 @@ def get_order_items_by_order(order_uuid: str, cursor: cursor_type):
 @db_connencion
 def get_orders_by_id(id: int, cursor: cursor_type):
     cursor.execute(
-        f"SELECT order_id, user_id FROM orders \
+        f"SELECT order_uuid, user_uuid FROM orders \
         WHERE id = '{id}';"
     )
     order_info = cursor.fetchone()
 
+    # print('order_info:', order_info)
     cursor.execute(
         f"SELECT p.name, p.id, p.price, o.count \
         FROM products p, order_items o \
-        WHERE p.id = o.product_id AND o.order_id = '{order_info[0]}';"
+        WHERE p.id = o.product_id AND o.order_uuid = '{order_info[0]}';"
     )
 
     res = [dict((cursor.description[i][0], value) \
@@ -286,7 +287,7 @@ if __name__ == "__main__":
     # )
 
     # print(add_to_cart('uuid-asd', 12, 2))
-    print(delete_product('1', 1))
+    print(get_orders_by_id(1))
 
     # SELECT title || ' ' ||  author || ' ' ||  abstract || ' ' || body AS document
     # FROM messages

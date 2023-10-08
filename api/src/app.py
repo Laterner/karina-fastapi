@@ -154,12 +154,13 @@ def get_all_orders(_order: str = 'ASC', _start: int = 0):
 
 @app.get('/get_all_orders/{id}', tags=['orders'])
 def get_orders_by_id(id: int):
-    content = db.get_orders_by_id(id)
+    content: list = db.get_orders_by_id(id)
+    content: list = db.get_all_orders('ASC', 0)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_orders_by_user', tags=['orders'])
 def get_orders_by_user(user_uuid: str):
-    content = db.get_orders_by_user(user_uuid)
+    content: list = db.get_orders_by_user(user_uuid)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_order_items_by_order', tags=['orders'])
