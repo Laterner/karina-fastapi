@@ -168,7 +168,7 @@ def get_products_by_category(category: str, page: int, cursor: cursor_type):
 
 @db_connencion
 def get_one_product(id: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, price FROM products WHERE id = '{id}';")
+    cursor.execute(f"SELECT id, name, price, is_active FROM products WHERE id = '{id}';")
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()][0]
@@ -221,9 +221,15 @@ def get_order_items_by_order(order_uuid: str, cursor: cursor_type):
 @db_connencion
 def get_orders_by_id(id: int, cursor: cursor_type):
     cursor.execute(
+        f"SELECT order_id, user_id FROM orders \
+        WHERE id = '{id}';"
+    )
+    order_info = cursor.fetchone()
+
+    cursor.execute(
         f"SELECT p.name, p.id, p.price, o.count \
         FROM products p, order_items o \
-        WHERE p.id = o.product_id AND o.id = '{id}';"
+        WHERE p.id = o.product_id AND o.order_id = '{order_info[0]}';"
     )
 
     res = [dict((cursor.description[i][0], value) \

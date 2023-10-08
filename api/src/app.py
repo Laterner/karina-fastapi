@@ -153,7 +153,7 @@ def get_all_orders(_order: str = 'ASC', _start: int = 0):
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_orders/{id}', tags=['orders'])
-def get_orders_by_id(id: str):
+def get_orders_by_id(id: int):
     content = db.get_orders_by_id(id)
     return JSONResponse(content=content, headers=headers)
 
