@@ -145,14 +145,22 @@ def delete_from_cart(uuid: str, product_id: int):
 
 
 """Orders page and activites"""
+@app.get('/get_all_orders', tags=['orders'])
+def get_all_orders(_order: str = 'ASC', _start: int = 0):
+    """For api admin"""
+    _start = 0 if _start < 0 else _start
+    content: list = db.get_all_orders(_order, _start)
+    return JSONResponse(content=content, headers=headers)
+
+@app.get('/get_all_orders/{user_uuid}', tags=['orders'])
 @app.get('/get_orders_by_user', tags=['orders'])
 def create_order(user_uuid: str):
     content = db.get_orders_by_user(user_uuid)
     return JSONResponse(content=content, headers=headers)
 
-@app.get('/get_order_items_by_user', tags=['orders'])
-def create_order(order_uuid: str):
-    content = db.get_order_items_by_user(order_uuid)
+@app.get('/get_order_items_by_order', tags=['orders'])
+def get_order_items_by_order(order_uuid: str):
+    content = db.get_order_items_by_order(order_uuid)
     return JSONResponse(content=content, headers=headers)
 
 @app.post('/create_order', tags=['orders'])
@@ -160,12 +168,6 @@ def create_order(user_uuid: str, products_in_cart: list[dict]):
     content = db.create_order(user_uuid, products_in_cart)
     return JSONResponse(content=content, headers=headers)
 
-@app.get('/get_all_orders', tags=['orders'])
-def get_all_orders(_order: str = 'ASC', _start: int = 0):
-    """For api admin"""
-    _start = 0 if _start < 0 else _start
-    content: list = db.get_all_orders(_order, _start)
-    return JSONResponse(content=content, headers=headers)
 
 """In dev"""
 @app.post('/login_user')

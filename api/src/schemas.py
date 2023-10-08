@@ -206,7 +206,7 @@ def get_orders_by_user(user_uuid: str, cursor: cursor_type):
     return res
 
 @db_connencion
-def get_order_items_by_user(order_uuid: str, cursor: cursor_type):
+def get_order_items_by_order(order_uuid: str, cursor: cursor_type):
     cursor.execute(
         f"SELECT p.name, p.id, p.price, o.count \
         FROM products p, order_items o \
