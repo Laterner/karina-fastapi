@@ -1,12 +1,12 @@
 import React from 'react';
-import {Datagrid, EditButton, List, ReferenceInput, TextField, TextInput} from "react-admin";
-
-interface IProduct {
-    category: string
-    id: number
-    name: string
-    price: number
-}
+import {
+    BooleanField,
+    Datagrid,
+    EditButton,
+    List,
+    TextField,
+    TextInput
+} from "react-admin";
 
 const postFilters = [
     <TextInput source="q" label="Search" alwaysOn />,
@@ -19,6 +19,7 @@ const ProductList = () => {
                 <TextField source="name" />
                 <TextField source="price" />
                 <TextField source="count" />
+                <BooleanField source="is_active" label="Active" />
                 <EditButton />
             </Datagrid>
         </List>

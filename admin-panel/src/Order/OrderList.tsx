@@ -4,19 +4,17 @@ import {Datagrid, EditButton, EmailField, List, ReferenceInput, TextField, TextI
 const postFilters = [
     <TextInput source="q" label="Search" alwaysOn />,
 ];
-const UserList = () => {
+const OrderList = () => {
     return (
         <List filters={postFilters}>
             <Datagrid rowClick="show">
                 <TextField source="id" />
-                <TextField source="username" />
-                <TextField source="phone" />
-                <TextField source="name" />
-                <EmailField source="email" />
-                <EditButton />
+                <TextField source="user_uuid" />
+                <TextField source="order_uuid" />
+                <TextField source="status" />
             </Datagrid>
         </List>
     );
 };
 
-export default UserList;
+export default OrderList;

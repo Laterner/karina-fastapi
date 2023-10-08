@@ -7,7 +7,6 @@ import PageNotFound from '../../pages/PageNotFound';
 import Shop from '../Shop/Shop';
 import CartPage from '../../pages/CartPage/CartPage';
 import ProductPage from '../../pages/ProductPage/ProductPage';
-import AdminPanel from '../adminPanel/adminPanel';
 import UserProfile from "../UserProfile/UserProfile";
 import Orders from "../Orders/Orders";
 
@@ -22,7 +21,6 @@ export default function App() {
           <Route path="/shop/:page" element={<Shop />} />
           <Route path="/shop/product/:productId" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/admin-panel" element={<AdminPanel />} />
           <Route path="/profile/:userId" element={<UserProfile />}/>
           <Route path="/orders" element={<Orders />}></Route>
           <Route path="*" element={<PageNotFound />} />

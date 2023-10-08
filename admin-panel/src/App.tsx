@@ -1,24 +1,22 @@
 import {
     Admin,
     Resource,
-    EditGuesser,
-    ShowGuesser, defaultTheme,
+    defaultTheme,
 } from "react-admin";
 import HeaderMenu from "./header/HeaderMenu";
 import jsonServerProvider from "ra-data-json-server";
-import ProductList from "./ProductList";
-import ProductCreate from "./ProductCreate";
-import UserList from "./UserList";
 import UserIcon from "@mui/icons-material/Group";
 // import DataIcon from "@mui/icons-material/DataSet";
 import {Dashboard} from "./Dashboard";
 import authProvider from "./authProvider";
+import {ProductCreate, ProductEdit, ProductList, ProductShow} from "./Product";
+import {OrderList, OrderShow} from "./Order";
 
 export const App = () => (
   <>
       <HeaderMenu/>
       <Admin
-          dataProvider={jsonServerProvider('http://localhost:8000')}
+          dataProvider={jsonServerProvider('http://185.221.162.85:8000')}
           dashboard={Dashboard}
           authProvider={authProvider}
           theme={defaultTheme}
@@ -28,15 +26,16 @@ export const App = () => (
               name="get_all_products"
               options={{ label: 'Products' }}
               list={ProductList}
-              edit={EditGuesser}
-              show={ShowGuesser}
+              edit={ProductEdit}
+              show={ProductShow}
               create={ProductCreate}
               // icon={DataIcon}
           />
           <Resource
-              name="users"
-              list={UserList}
-              show={ShowGuesser}
+              name="get_all_orders"
+              options={{ label: 'Orders' }}
+              list={OrderList}
+              show={OrderShow}
               icon={UserIcon}
           />
       </Admin>
