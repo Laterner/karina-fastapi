@@ -51,7 +51,7 @@ def get_products(page: int, cursor: cursor_type ) -> list:
 
 @db_connencion
 def get_all_products(_order: str, _start: int, cursor: cursor_type ) -> list:
-    cursor.execute(f'SELECT id, name, price FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
+    cursor.execute(f'SELECT id, name, price, is_active FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()]
