@@ -90,8 +90,6 @@ def products(page: int = 1):
     content: list = db.get_products(page)
     return JSONResponse(content=content, headers=headers)
 
-
-@app.get('/product/{id}', tags=['products'])
 @app.get('/get_all_products/{id}', tags=['products'])
 def get_one_product(id: int):
     content = db.get_one_product(id)
