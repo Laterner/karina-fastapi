@@ -49,11 +49,11 @@ origins = ['*']
 #     'http://185.221.162.85:8888',
 #     'http://185.221.162.85:3000',
 
-#     'http://185.195.25.186',
-#     'http://185.195.25.186:80',
-#     'http://185.195.25.186:8000',
-#     'http://185.195.25.186:8888',
-#     'http://185.195.25.186:3000',
+#     'http://46.17.104.8',
+#     'http://46.17.104.8:80',
+#     'http://46.17.104.8:8000',
+#     'http://46.17.104.8:8888',
+#     'http://46.17.104.8:3000',
 # ]
 
 
@@ -93,6 +93,11 @@ def products(page: int = 1):
 @app.get('/get_all_products/{id}', tags=['products'])
 def get_one_product(id: int):
     content = db.get_one_product(id)
+    return JSONResponse(content=content, headers=headers)
+
+@app.put('/get_all_products/{id}', tags=['products'])
+def put_one_product(id: int, name: str, count: int, is_active: bool, price: int):
+    content = db.put_one_product(id, name, count, is_active, price)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_products', tags=['products'])
