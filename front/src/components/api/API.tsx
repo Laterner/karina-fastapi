@@ -1,35 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {IProductType} from "../../pages/subcom/types/IProductType";
 export const API_URL = "http://46.17.104.8:8000"; // import.meta.env.VITE_API_HOSTNAME;
-
-const promiseWrapper: any = (promise: Promise<any>) => {
-  let status = 'pending';
-  let result: any;
-
-  const s = promise.then(
-    (value: string) => {
-      status = 'success';
-      result = value;
-    },
-    (error: string) => {
-      status = 'error';
-      result = error;
-    }
-  );
-
-  return () => {
-    switch (status) {
-    case 'pending':
-      throw s;
-    case 'success':
-      return result;
-    case 'error':
-      return null;
-    default:
-      throw result;
-    }
-  };
-};
 
 export const fetchData = async (request: string, method: 'GET' | 'POST' | 'DELETE') => {
   try {
@@ -45,7 +17,7 @@ export const fetchData = async (request: string, method: 'GET' | 'POST' | 'DELET
 };
 
 export function useApiData(request: string, method: 'GET' | 'POST') {
-  const [resource, setResource] = useState<any>(null);
+  const [resource, setResource] = useState<IProductType[]>([]);
 
   useEffect(() => {
     let isMounted = true;

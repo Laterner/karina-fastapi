@@ -8,10 +8,13 @@ import { useState } from 'react';
 import { PriceText , TitleText } from '../../shared/styledComponents/Texts';
 import { fetchData } from '../../components/api/API';
 import { CardButton } from '../../shared/styledComponents/Buttons';
+import {IProductType} from "./types/IProductType";
 
-
-export default function KarinaCard(props) {
-  const { name, id, price } = props;
+interface IKarinaCardProps {
+  card: IProductType
+}
+export default function KarinaCard({card}: IKarinaCardProps) {
+  const { name, id, price } = card;
   const [cookies, setCookie] = useCookies(['cart']);
 
   const url = '/add_to_cart/?uuid=';

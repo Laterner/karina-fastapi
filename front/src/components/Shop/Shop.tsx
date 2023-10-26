@@ -5,7 +5,7 @@ import './Shop.css';
 import { useSearchParams, useParams } from 'react-router-dom';
 
 import GetCards from '../../pages/subcom/GetCards';
-import SideMenu from '../SideMenu/SideMenu';
+// import SideMenu from '../SideMenu/SideMenu';
 import PagesCounter from '../../pages/subcom/PagesCounter';
 import { spin } from '../../shared/styledComponents/Spinner';
 

@@ -3,14 +3,14 @@ import { Stack } from '@chakra-ui/layout';
 import { useApiData } from '../../components/api/API';
 import './pageCounter.css'
 import { Pagination } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function PagesCounter() {
   const productsCount = Math.ceil(useApiData('/products_count', 'GET')/12)
   const [page, setPage] = useState(1)
   const navigate = useNavigate();
 
-  const reloadCards = (page) => {
+  const reloadCards = (page: number) => {
     setPage(page)
     navigate(`/shop/${page}`)
   }
