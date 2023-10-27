@@ -168,7 +168,7 @@ def get_products_by_category(category: str, page: int, cursor: cursor_type):
 
 @db_connencion
 def get_one_product(id: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, price, count is_active FROM products WHERE id = '{id}';")
+    cursor.execute(f"SELECT id, name, price, count, is_active FROM products WHERE id = '{id}';")
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()][0]
@@ -179,10 +179,10 @@ def get_one_product(id: int, cursor: cursor_type):
 def put_one_product(id: int, name: str, count: int, is_active: bool, price: int, cursor: cursor_type):
     cursor.execute(f"UPDATE products SET name={name}, price={price}, count={count}, is_active={is_active} FROM products WHERE id = '{id}';")
     
-    res = [dict((cursor.description[i][0], value) \
-        for i, value in enumerate(row)) for row in cursor.fetchall()][0]
+    # res = [dict((cursor.description[i][0], value) \
+    #     for i, value in enumerate(row)) for row in cursor.fetchall()][0]
     
-    return res
+    return cursor.statusmessage
 
 @db_connencion
 def login_user(email: str, password: str, cursor: cursor_type) -> dict:

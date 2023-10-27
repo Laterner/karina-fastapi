@@ -61,7 +61,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "PUT"],
     allow_headers=["Content-Type", "Access-Control-Request-Headers", "Access-Control-Expose-Headers", "Access-Control-Allow-Methods", "Access-Control-Allow-Origin", "Authorization", "X-Total-Count"],
     expose_headers=['X-Total-Count'],
 )
@@ -95,10 +95,17 @@ def get_one_product(id: int):
     content = db.get_one_product(id)
     return JSONResponse(content=content, headers=headers)
 
-@app.put('/get_all_products/{id}', tags=['products'])
+@app.put('/get_all_products/{id}')
 def put_one_product(id: int, name: str, count: int, is_active: bool, price: int):
-    content = db.put_one_product(id, name, count, is_active, price)
-    return JSONResponse(content=content, headers=headers)
+    print('request from put: ', name)
+    # content = db.put_one_product(id, name, count, is_active, price)
+    return JSONResponse(content={
+    "id": 1,
+    "name": " Книга учета А4 160 л. глянцевая ламинация",
+    "price": 210.0,
+    "count": 10,
+    "is_active": False
+}, headers=headers)
 
 @app.get('/get_all_products', tags=['products'])
 def get_all_products(_order: str = 'ASC', _start: int = 0):
