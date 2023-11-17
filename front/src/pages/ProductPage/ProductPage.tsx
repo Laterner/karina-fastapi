@@ -13,7 +13,7 @@ type ProductPageParams = {
     productId: string;
 };
 
-const url = '/product/';
+const url = '/get_all_products/';
 
 export default function ProductPage() {
   const { productId } = useParams<ProductPageParams>();

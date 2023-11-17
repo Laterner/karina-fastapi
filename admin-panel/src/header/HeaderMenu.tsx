@@ -20,27 +20,6 @@ export default function HeaderMenu() {
                         Корзина
                     </a>
                 </li>
-                {/* <li>
-                    <a
-                        href="#"
-                        onClick={() => universalRedirect('/dsggddfsgfs')}
-                    >
-                        Тест
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="#"
-                        onClick={() => universalRedirect('/shop/product/1')}
-                    >
-                        Product
-                    </a>
-                </li> */}
-                {/*<li>*/}
-                {/*    <a href="#" onClick={() => redirectToOrdersMonitoring()}>*/}
-                {/*        Admin Panel*/}
-                {/*    </a>*/}
-                {/*</li>*/}
             </ul>
         </Box>
     );
