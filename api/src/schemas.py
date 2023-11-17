@@ -14,7 +14,7 @@ def update_role(id: int, role: str, cursor: cursor_type) -> None:
     return ('updated', cursor.statusmessage)
 
 @db_connencion
-def reg_user(firstname: str, lastname: str, email: str, password: str, cursor: cursor_type) -> None:
+def reg_user_old(firstname: str, lastname: str, email: str, password: str, cursor: cursor_type) -> None:
     cursor.execute(f"SELECT * FROM users WHERE email='{email}'")
     if cursor.fetchone() != None:
         return {'data':'emailExisting', 'type':'error'}
@@ -178,29 +178,56 @@ def get_one_product(id: int, cursor: cursor_type):
 @db_connencion
 def put_one_product(id: int, name: str, count: int, is_active: bool, price: int, cursor: cursor_type):
     cursor.execute(f"UPDATE products SET name={name}, price={price}, count={count}, is_active={is_active} FROM products WHERE id = '{id}';")
-    
-    # res = [dict((cursor.description[i][0], value) \
-    #     for i, value in enumerate(row)) for row in cursor.fetchall()][0]
-    
     return cursor.statusmessage
 
 @db_connencion
-def login_user(email: str, password: str, cursor: cursor_type) -> dict:
+def admin_auth(email: str, password: str, cursor: cursor_type) -> dict:
     hashed_password = sha256(password.encode()).hexdigest()
 
-    cursor.execute(f"SELECT id, email FROM users where email='{email}' AND password='{hashed_password}';")
+    cursor.execute(f"SELECT id, email FROM users where email='{email}' AND password='{hashed_password}' AND role='admin';")
     publisher_records = cursor.fetchone()
     
     if publisher_records == None:
         return {'data': 'incorrectPassword', 'type': 'error'}
+    
+    print("publisher_records:", publisher_records)
 
-    cursor.execute(f"SELECT id, email FROM users where id={publisher_records[0]} AND role='admin';")
-    publisher_records = cursor.fetchall()
+    _uuid = uuid4().__str__()
+    cursor.execute("UPDATE users SET uuid=%s WHERE id=%s;",
+            (_uuid, publisher_records[0])
+    )
 
     if publisher_records.__len__() < 1:
         return {'data': 'notAllowed', 'type': 'error'}
     else:
-        return {'data': email, 'type': 'successful'}
+        return {'data': _uuid, 'type': 'successful'}
+
+@db_connencion
+def user_register(first_name: str, last_name: str, email: str, cursor: cursor_type):
+    cursor.execute(f"SELECT * FROM users WHERE email='{email}'")
+    if cursor.fetchone() != None:
+        return {'data':'emailExisting', 'type':'error'}
+
+    _uuid = uuid4().__str__()
+    cursor.execute('INSERT INTO users \
+            ( firstname, lastname, email, uuid )'
+            'VALUES (%s, %s, %s, %s);',
+            (
+                first_name, 
+                last_name, 
+                email,
+                _uuid 
+            )
+    )
+    
+    if cursor.statusmessage == "INSERT 0 1":
+        return {'data':_uuid, 'type':'successful'}
+    else:
+        return {'data':'unnamed error', 'type':'error'}
+
+@db_connencion
+def get_token():
+    pass
 
 @db_connencion
 def get_orders_by_user(user_uuid: str, cursor: cursor_type):
@@ -264,14 +291,14 @@ def create_order(user_uuid: str, products_in_cart: list[dict], cursor: cursor_ty
             )
     
     cursor.execute('INSERT INTO orders \
-            ( order_uuid, user_uuid, status )'
-            'VALUES (%s, %s, %s);',
-            (
-                order_uuid, 
-                user_uuid, 
-                'created', 
-            )
+        ( order_uuid, user_uuid, status )'
+        'VALUES (%s, %s, %s);',
+        (
+            order_uuid, 
+            user_uuid, 
+            'created', 
         )
+    )
     
     exe_status = cursor.statusmessage
 
@@ -290,13 +317,18 @@ def get_all_orders(_order: str, _start: int, cursor: cursor_type ) -> list:
 
 if __name__ == "__main__":
     el = {'id':'asd'}
+    print(admin_auth('admin@test.ru', 'password'))
+
+    # ro = user_register('lddads', 'asdddafsd', 'named@nk.ru')
+    # print(ro)
+    # print(type(ro))
     # print(
     #     'res:', 
     #     get_from_cart('c11589f2-ce86-4691-8953-111a33c4c3e8')
     # )
 
     # print(add_to_cart('uuid-asd', 12, 2))
-    print(get_orders_by_id(1))
+    # print(get_orders_by_id(1))
 
     # SELECT title || ' ' ||  author || ' ' ||  abstract || ' ' || body AS document
     # FROM messages

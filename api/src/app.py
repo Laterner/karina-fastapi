@@ -100,11 +100,11 @@ def put_one_product(id: int, name: str, count: int, is_active: bool, price: int)
     print('request from put: ', name)
     # content = db.put_one_product(id, name, count, is_active, price)
     return JSONResponse(content={
-    "id": 1,
-    "name": " Книга учета А4 160 л. глянцевая ламинация",
-    "price": 210.0,
-    "count": 10,
-    "is_active": False
+    "id": id,
+    "name": name,
+    "price": price,
+    "count": count,
+    "is_active": is_active
 }, headers=headers)
 
 @app.get('/get_all_products', tags=['products'])
@@ -185,8 +185,17 @@ def create_order(user_uuid: str, products_in_cart: list[dict]):
 
 
 """In dev"""
-@app.post('/login_user')
-def login_user(login: str, password: str):
+@app.post('/user_auth')
+def admin_auth(login: str, password: str):
+    content = db.admin_auth(login, password)
+    return JSONResponse(content=content, headers=headers)
+    # if login == 'admin' and password == 'admin':
+    #     return {'data': 'uuid_user_lol'}
+    # else:
+    #     return {'data': 'failed'}
+
+@app.post('/user_registration')
+def user_registration(login: str, password: str):
     if login == 'admin' and password == 'admin':
         return {'data': 'uuid_user_lol'}
     else:
