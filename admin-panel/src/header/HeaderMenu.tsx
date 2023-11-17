@@ -16,6 +16,11 @@ export default function HeaderMenu() {
                     </a>
                 </li>
                 <li>
+                    <a href="#" onClick={() => universalRedirect('/cart')}>
+                        Корзина
+                    </a>
+                </li>
+                {/* <li>
                     <a
                         href="#"
                         onClick={() => universalRedirect('/dsggddfsgfs')}
@@ -30,7 +35,7 @@ export default function HeaderMenu() {
                     >
                         Product
                     </a>
-                </li>
+                </li> */}
                 {/*<li>*/}
                 {/*    <a href="#" onClick={() => redirectToOrdersMonitoring()}>*/}
                 {/*        Admin Panel*/}
