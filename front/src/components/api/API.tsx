@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {IProductType} from "../../pages/subcom/types/IProductType";
-export const API_URL = "http://46.17.104.8:8000"; // import.meta.env.VITE_API_HOSTNAME;
+export const API_HOSTNAME = import.meta.env.VITE_API_HOSTNAME;
 
 export const fetchData = async (request: string, method: 'GET' | 'POST' | 'DELETE') => {
+  const API_URL = "http://" + API_HOSTNAME + ":8000"
+  console.warn("API_URL: " + API_URL)
   try {
     const response = await axios({ method, url: API_URL + request });
     if (response.data.type !== 'error') {

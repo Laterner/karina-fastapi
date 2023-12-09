@@ -7,7 +7,7 @@ import { ProductPageDataItem, Button } from '../../shared/styledComponents/Butto
 import {fetchData, useApiData} from "../../components/api/API";
 import PageNotFound from "../PageNotFound";
 import {spin} from "../../shared/styledComponents/Spinner";
-import axios from "axios";
+
 
 type ProductPageParams = {
     productId: string;

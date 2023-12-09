@@ -1,3 +1,4 @@
+
 export default function Main() {
   const sty = {
     border: '1px solid black',

@@ -9,31 +9,17 @@ services:
       - ./api/src/:/usr/src/app/
     ports:
       - 8000:8000
-    env_file:
-      - .env
-    networks:
-      - karina
-
-  # karina_db:
-  #   image: postgres:12.1-alpine
-  #   container_name: karina_db
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data/
-  #   env_file:
-  #     - .env
-  #   ports:
-  #       - "127.0.0.1:5432:5432"
-  #   networks:
-  #     - karina
+    env_file: .env
 
   karina_front:
     container_name: karina_front
     mem_limit: 300m
-    build: ./front
-    env_file:
-      - .env
-    depends_on: 
-      - karina_api
+    build: 
+      context: ./front
+      args:
+        - VITE_API_HOSTNAME=${VITE_API_HOSTNAME}
+
+    env_file: .env
     volumes:
       - site:/app/dist
   
@@ -54,13 +40,8 @@ services:
       - admin:/usr/share/nginx/html/admin
     ports:
       - 80:80
-    networks:
-      - karina
     depends_on: 
       - karina_admin
-
-networks:
-  karina:
 
 volumes:
   site:
