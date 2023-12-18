@@ -5,10 +5,11 @@ import HeaderMain from '../header/HeaderMain/HeaderMain'
 import Main from '../../pages/MainPage'
 import PageNotFound from '../../pages/PageNotFound'
 import Shop from '../Shop/Shop'
-import CartPage from '../../pages/CartPage/CartPage'
+import CartPage from '../Cart/CartPage'
 import ProductPage from '../../pages/ProductPage/ProductPage'
 import UserProfile from '../UserProfile/UserProfile'
 import Orders from '../Orders/Orders'
+import Order from '../Order/Order'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/profile/:userId" element={<UserProfile />} />
           <Route path="/orders" element={<Orders />}></Route>
+          <Route path="/order" element={<Order />}></Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

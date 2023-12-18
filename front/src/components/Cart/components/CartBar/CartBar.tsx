@@ -1,8 +1,9 @@
-import { CardButton } from '../../../shared/styledComponents/Buttons'
-import CartCard from '../cartCard/cartCard'
-import { CartBarContainer, CartBarFooter } from './cartBar.styled'
-import { useCartStore } from '../store/CartStore'
+import { CardButton } from '../../../../shared/styledComponents/Buttons'
+import CartCard from '../CartCard/CartCard'
+import { CartBarContainer, CartBarFooter } from './CartBar.styled'
+import { useCartStore } from '../../store/CartStore'
 import { observer } from 'mobx-react-lite'
+import { Link } from 'react-router-dom'
 
 const CartBar = () => {
   const cartStore = useCartStore()
@@ -49,7 +50,9 @@ const CartBar = () => {
             </h2>
             <h2>{cartStore.getCartPrice} ₽</h2>
             <CardButton color={'#90ee90'}>
-              <p>Купить</p>
+              <Link to="/order">
+                <p>Купить</p>
+              </Link>
             </CardButton>
           </CartBarFooter>
         </>

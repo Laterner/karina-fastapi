@@ -1,0 +1,1 @@
+export { EObtainingMethodInput } from './EObtainingMethodInput'

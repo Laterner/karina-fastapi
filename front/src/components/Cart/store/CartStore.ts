@@ -1,7 +1,7 @@
 import { types } from 'mobx-state-tree'
 import { CartState } from './models'
 import makeInspectable from 'mobx-devtools-mst'
-import type { ICard } from '../../../pages/CartPage/cartPage.types'
+import type { ICard } from '../cartPage.types'
 import { createContext, useContext } from 'react'
 import { RequestState } from '../../../stores/models'
 

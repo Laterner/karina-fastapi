@@ -80,19 +80,3 @@ export const CountButton = styled.button`
     background-color: rgba(0, 0, 0, 0.1);
   }
 `
-
-export const PageButton = styled.button`
-  display: flex;
-  width: auto;
-  padding: 5px;
-  border: none;
-  border-radius: 3px;
-  background-color: white;
-  color: #333;
-  font-size: 12px;
-  align-items: center;
-  justify-content: center;
-  :hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`

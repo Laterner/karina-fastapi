@@ -1,28 +1,24 @@
 import type { FC } from 'react'
-import { useState } from 'react'
-
-import { PriceText, TitleText } from '../../../shared/styledComponents/Texts'
-import { CardButton, CountButton } from '../../../shared/styledComponents/Buttons'
-import type { ICard } from '../../../pages/CartPage/cartPage.types'
-import NoImage from '../../../no_image.png'
-import { fetchData } from '../../api/API'
-
-import { CartCardBody, CartCardContainer, CartCardCount } from './cartCard.styled'
+import { PriceText, TitleText } from '../../../../shared/styledComponents/Texts'
+import { CardButton, CountButton } from '../../../../shared/styledComponents/Buttons'
+import type { ICard } from '../../cartPage.types'
+import NoImage from '../../../../no_image.png'
+import { fetchData } from '../../../api/API'
+import { CartCardBody, CartCardContainer, CartCardCount } from './CartCard.styled'
 import { observer } from 'mobx-react-lite'
-import { useCartStore } from '../store/CartStore'
+import { useCartStore } from '../../store/CartStore'
 import { InputNumber } from 'antd'
+import cn from 'classnames'
+import { cartId, deleteFromCartUrl } from '../../../../shared/constants'
 
 interface ICartCardProps {
   card: ICard
+  disabledInput?: boolean
 }
 
-const url = '/delete_from_cart/?uuid='
-const cartId = 'c11589f2-ce86-4691-8953-111a33c4c3e8'
-
-const CartCard: FC<ICartCardProps> = ({ card }) => {
+const CartCard: FC<ICartCardProps> = ({ card, disabledInput }) => {
   const cartStore = useCartStore()
   const cardCount = cartStore.getCardCount(card.id)
-  const [width, setWidth] = useState(36)
   const product_url = 'product/' + card.id
 
   const handleClick = (event: 'PLUS' | 'MINUS') => {
@@ -36,9 +32,6 @@ const CartCard: FC<ICartCardProps> = ({ card }) => {
         cartStore.updateCartCount(cartStore.state.cart_count + 1)
         cartStore.updateCardCount(card.id, cardCount + 1)
       }
-      cardCount.toString().length >= 2
-        ? setWidth(12 * cardCount.toString().length + 12)
-        : setWidth(36)
     }
   }
 
@@ -49,13 +42,9 @@ const CartCard: FC<ICartCardProps> = ({ card }) => {
       inputValue = initValue
       cartStore.updateCardCount(card.id, inputValue)
       cartStore.updateCartCount(inputValue)
-
-      setWidth(12 * initValue.toString().length)
     } else {
       cartStore.updateCardCount(card.id, 1)
       cartStore.updateCartCount(1)
-
-      setWidth(36)
     }
     cartStore.updateCardCount(card.id, inputValue)
     cartStore.updateCartCount(inputValue)
@@ -63,7 +52,10 @@ const CartCard: FC<ICartCardProps> = ({ card }) => {
 
   const deleteCard = async (id: number, count: number) => {
     cartStore.deleteCard(id)
-    await fetchData(`${url + cartId}&product_id=${id}&count=${count ? count : 1}`, 'POST')
+    await fetchData(
+      `${deleteFromCartUrl + cartId}&product_id=${id}&count=${count ? count : 1}`,
+      'POST',
+    )
     cartStore.setCartCards(await fetchData('/cart/?uuid=' + cartId, 'GET'))
   }
 
@@ -75,17 +67,18 @@ const CartCard: FC<ICartCardProps> = ({ card }) => {
       <CartCardBody>
         <TitleText title={card.name}>{card.name}</TitleText>
         <CartCardCount>
-          <div className="counter-container">
-            <CountButton onClick={() => handleClick('PLUS')}>+</CountButton>
+          <div className={cn(disabledInput && 'count-input', 'counter-container')}>
+            {!disabledInput && <CountButton onClick={() => handleClick('PLUS')}>+</CountButton>}
             <InputNumber
               value={cardCount}
+              disabled={disabledInput}
               min={1}
               max={1000}
               controls={false}
               bordered={false}
               onChange={count => count !== null && handleChange(count)}
             />
-            <CountButton onClick={() => handleClick('MINUS')}>-</CountButton>
+            {!disabledInput && <CountButton onClick={() => handleClick('MINUS')}>-</CountButton>}
           </div>
         </CartCardCount>
       </CartCardBody>

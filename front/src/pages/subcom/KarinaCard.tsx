@@ -6,9 +6,8 @@ import { CardButton } from '../../shared/styledComponents/Buttons'
 import type { IProductType } from './types/IProductType'
 import { useCartStore } from '../../components/Cart/store/CartStore'
 import { observer } from 'mobx-react-lite'
+import { addToCartUrl, cartId } from '../../shared/constants'
 
-const url = '/add_to_cart/?uuid='
-const cartId = 'c11589f2-ce86-4691-8953-111a33c4c3e8'
 interface IKarinaCardProps {
   card: IProductType
 }
@@ -44,7 +43,7 @@ const KarinaCard = ({ card }: IKarinaCardProps) => {
             className={'add_elem'}
             onClick={() => {
               cartStore.addCard({ ...card, count: 1 })
-              fetchData(`${url + cartId}&product_id=${id}&count=1`, 'POST')
+              fetchData(`${addToCartUrl + cartId}&product_id=${id}&count=1`, 'POST')
             }}
           >
             <p>В корзину</p>

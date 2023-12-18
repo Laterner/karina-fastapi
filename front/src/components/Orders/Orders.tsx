@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import './Orders.css'
-import type { ICard } from '../../pages/CartPage/cartPage.types'
+import type { ICard } from '../Cart/cartPage.types'
 import { useApiData } from '../api/API'
 import NoImage from '../../no_image.png'
-import { CartCardBody } from '../Cart/cartCard/cartCard.styled'
+import { CartCardBody } from '../Cart/components/CartCard/CartCard.styled'
 import { PriceText, TitleText } from '../../shared/styledComponents/Texts'
 import { useCartStore } from '../Cart/store/CartStore'
+import { cartId, cartUrl } from '../../shared/constants'
 interface IOrder {
   name: string
   id: number
@@ -18,12 +19,9 @@ interface IProps {
   key?: number
 }
 
-const url = '/cart/?uuid='
-const cartId = 'c11589f2-ce86-4691-8953-111a33c4c3e8'
-
 const OrderCard = ({ order }: IProps) => {
   const cartStore = useCartStore()
-  const data: ICard[] = useApiData(url + cartId, 'GET')
+  const data: ICard[] = useApiData(cartUrl + cartId, 'GET')
 
   useEffect(() => {
     if (data) {
