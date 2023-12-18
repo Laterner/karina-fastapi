@@ -1,42 +1,43 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import {IProductType} from "../../pages/subcom/types/IProductType";
-export const API_HOSTNAME = import.meta.env.VITE_API_HOSTNAME;
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import type { IProductType } from '../../pages/subcom/types/IProductType'
+
+const API_HOSTNAME = import.meta.env.VITE_API_HOSTNAME
 
 export const fetchData = async (request: string, method: 'GET' | 'POST' | 'DELETE') => {
-  const API_URL = "http://" + API_HOSTNAME + ":8000"
-  console.warn("API_URL: " + API_URL)
   try {
-    const response = await axios({ method, url: API_URL + request });
+    const response = await axios({ method, url: API_HOSTNAME + request })
+
     if (response.data.type !== 'error') {
-      return response.data;
-    } else {
-      return null;
+      return response.data
     }
+
+    return null
   } catch (error) {
-    return null;
+    return null
   }
-};
+}
 
 export function useApiData(request: string, method: 'GET' | 'POST') {
-  const [resource, setResource] = useState<IProductType[]>([]);
+  const [resource, setResource] = useState<IProductType[]>([])
 
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     const fetchDataAsync = async () => {
-      const data = await fetchData(request, method);
-      if (isMounted) {
-        setResource(data);
-      }
-    };
+      const data = await fetchData(request, method)
 
-    fetchDataAsync();
+      if (isMounted) {
+        setResource(data)
+      }
+    }
+
+    fetchDataAsync()
 
     return () => {
-      isMounted = false;
-    };
-  }, [request, method]);
+      isMounted = false
+    }
+  }, [request, method])
 
-  return resource;
+  return resource
 }

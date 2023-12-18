@@ -1,43 +1,44 @@
-import { Box, Stack } from '@chakra-ui/layout';
-import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { Box, Stack } from '@chakra-ui/layout'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-import NoImage from '../../no_image.png';
-import { ProductPageDataItem, Button } from '../../shared/styledComponents/Buttons';
-import {fetchData, useApiData} from "../../components/api/API";
-import PageNotFound from "../PageNotFound";
-import {spin} from "../../shared/styledComponents/Spinner";
-
+import NoImage from '../../no_image.png'
+import { ProductPageDataItem, Button } from '../../shared/styledComponents/Buttons'
+import { useApiData } from '../../components/api/API'
+import PageNotFound from '../PageNotFound'
+import { spin } from '../../shared/styledComponents/Spinner'
 
 type ProductPageParams = {
-    productId: string;
-};
+  productId: string
+}
 
-const url = '/get_all_products/';
+const url = '/get_all_products/'
 
 export default function ProductPage() {
-  const { productId } = useParams<ProductPageParams>();
+  const { productId } = useParams<ProductPageParams>()
   const [isLoading, setLoading] = useState(true)
   const [isError, setError] = useState(false)
 
-  const product = useApiData(`${url + productId}`, 'GET')
+  const product = useApiData(`${url + productId}`, 'GET')[0]
 
-  const productDataItems = ['Артикул', 'Штрих-код', 'Наличие', 'Вес'];
-  const productDataValues = ['174206', '2000000001982', '172', '16 кг'];
+  const productDataItems = ['Артикул', 'Штрих-код', 'Наличие', 'Вес']
+  const productDataValues = ['174206', '2000000001982', '172', '16 кг']
 
   const renderContent = () => {
     if (isLoading) {
-      return <>{spin}</>;
+      return <>{spin}</>
     } else if (isError) {
-      return <PageNotFound />;
+      return <PageNotFound />
     } else if (product) {
       return (
         <>
-          <Box w="100%">one s {productId} page</Box><Box w="100%">
+          <Box w="100%">one s {productId} page</Box>
+          <Box w="100%">
             <h3>{product.name}</h3>
-          </Box><Stack direction={'row'}>
+          </Box>
+          <Stack direction={'row'}>
             <Box background={'red'} boxSize={350}>
-              <img src={NoImage} alt="img not load"/>
+              <img src={NoImage} alt="img not load" />
             </Box>
             <Box w={'calc(100% - 400px)'} p={20}>
               <Box h={'calc(100% - 20px)'}>
@@ -46,7 +47,7 @@ export default function ProductPage() {
                     <ProductPageDataItem>
                       {el}:
                       <span>
-                        <p/>
+                        <p />
                       </span>
                     </ProductPageDataItem>
                     {productDataValues[idx]}
@@ -60,11 +61,11 @@ export default function ProductPage() {
             </Box>
           </Stack>
         </>
-      );
-    } else {
-      return null;
+      )
     }
-  };
+
+    return null
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -73,14 +74,13 @@ export default function ProductPage() {
       } else {
         setError(true)
       }
-      setLoading(false);
+      setLoading(false)
     }, 500)
+
     return () => {
       clearTimeout(timer)
     }
-  }, [product]);
+  }, [product])
 
-  return (
-    <>{renderContent()}</>
-  );
+  return <>{renderContent()}</>
 }

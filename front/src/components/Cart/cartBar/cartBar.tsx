@@ -1,34 +1,29 @@
-import { useState } from 'react';
+import { CardButton } from '../../../shared/styledComponents/Buttons'
+import CartCard from '../cartCard/cartCard'
+import { CartBarContainer, CartBarFooter } from './cartBar.styled'
+import { useCartStore } from '../store/CartStore'
+import { observer } from 'mobx-react-lite'
 
-import { ICard } from '../../../pages/CartPage/cartPage.types';
-import { CardButton } from '../../../shared/styledComponents/Buttons';
-import CartCard from '../cartCard/cartCard';
-
-import { CartBarContainer, CartBarFooter } from './cartBar.styled';
-interface ICartBarProps {
-    cards: ICard[];
-    setCards: React.Dispatch<React.SetStateAction<ICard[]>>;
-}
-
-const CartBar = ({ cards, setCards }: ICartBarProps) => {
-  const totalPrice = cards.reduce((total, card) => total + card.price, 0);
-  const totalItems = cards.reduce((total, card) => total + card.count, 0);
-  const [itemsCount, setItemsCount] = useState(() => totalItems);
+const CartBar = () => {
+  const cartStore = useCartStore()
+  const cards = cartStore.state.cart_cards
 
   function getNoun(number: number, one: string, two: string, five: string) {
-    let n = Math.abs(number);
-    n %= 100;
+    let n = Math.abs(number)
+    n %= 100
     if (n >= 5 && n <= 20) {
-      return five;
+      return five
     }
-    n %= 10;
+    n %= 10
     if (n === 1) {
-      return one;
+      return one
     }
+
     if (n >= 2 && n <= 4) {
-      return two;
+      return two
     }
-    return five;
+
+    return five
   }
 
   return (
@@ -39,13 +34,7 @@ const CartBar = ({ cards, setCards }: ICartBarProps) => {
       ) : (
         <>
           {cards.map(card => (
-            <CartCard
-              cards={cards}
-              key={card.id}
-              card={card}
-              setCards={setCards}
-              setItemsCount={setItemsCount}
-            />
+            <CartCard card={card} key={card.id} />
           ))}
         </>
       )}
@@ -54,9 +43,11 @@ const CartBar = ({ cards, setCards }: ICartBarProps) => {
           <h4>Итого:</h4>
           <CartBarFooter>
             <h2>
-              {itemsCount} {getNoun(itemsCount, 'товар', 'товара', 'товаров')}
+              {cartStore.state.cart_count}{' '}
+              {cartStore.state.cart_count &&
+                getNoun(cartStore.state.cart_count, 'товар', 'товара', 'товаров')}
             </h2>
-            <h2>{totalPrice} ₽</h2>
+            <h2>{cartStore.getCartPrice} ₽</h2>
             <CardButton color={'#90ee90'}>
               <p>Купить</p>
             </CardButton>
@@ -64,7 +55,7 @@ const CartBar = ({ cards, setCards }: ICartBarProps) => {
         </>
       )}
     </CartBarContainer>
-  );
-};
+  )
+}
 
-export default CartBar;
+export default observer(CartBar)

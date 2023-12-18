@@ -1,5 +1,13 @@
 const SearchIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0,0,256,256" fill="#000">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+    width="50"
+    height="50"
+    viewBox="0,0,256,256"
+    fill="#000"
+  >
     <g
       fill="#fff"
       fillRule="nonzero"
@@ -20,6 +28,6 @@ const SearchIcon = () => (
       </g>
     </g>
   </svg>
-);
+)
 
-export default SearchIcon;
+export default SearchIcon
