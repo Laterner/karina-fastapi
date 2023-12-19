@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, Response
 from fastapi.responses import RedirectResponse, JSONResponse
 
 import schemas as db
@@ -95,22 +95,22 @@ def get_all_products(order: str = 'ASC', start: int = 0, end: int = 10, sort: st
     content: list = db.get_all_products(start, end, order, sort)
     return JSONResponse(content=content, headers=headers)
 
+@app.post('/get_all_products', tags=['products'])
+async def get_all_products(order: str = 'ASC', start: int = 0, end: int = 10, sort: str = 'id'):
+    start = 0 if start < 0 else start
+    content: list = db.get_all_products(start, end, order, sort)
+    return JSONResponse(content=content, headers=headers)
+
 @app.get('/get_all_products/{id}', tags=['products'])
 def get_one_product(id: int):
     content = db.get_one_product(id)
     return JSONResponse(content=content, headers=headers)
 
 @app.put('/get_all_products/{id}', tags=['products'])
-def put_one_product(id: int, name: str, count: int, is_active: bool, price: int):
-    print('request from put: ', name)
-    # content = db.put_one_product(id, name, count, is_active, price)
-    return JSONResponse(content={
-    "id": id,
-    "name": name,
-    "price": price,
-    "count": count,
-    "is_active": is_active
-}, headers=headers)
+async def put_one_product(request: Request):
+    data = await request.json()
+    content = db.put_one_product(data['id'], data['name'], data['price'], data['count'], data['is_active'])
+    return JSONResponse(content=content, headers=headers)
 
 # @app.get('/get_all_products', tags=['products'])
 # def get_one_product(id: int):

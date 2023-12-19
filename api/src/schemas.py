@@ -38,6 +38,9 @@ def init_database():
     init_db.init()
 
 
+def string_formaterFor_sql(str: str):
+    return str.replace('"', '\"')
+
 
 ################################## переписал
     
@@ -53,7 +56,7 @@ def get_products(page: int, cursor: cursor_type ) -> list:
 
 @db_connencion
 def get_all_products(_start: int, end: int, order: str, sort: str, cursor: cursor_type ) -> list:
-    cursor.execute(f'SELECT id, name, price, is_active FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
+    cursor.execute(f'SELECT id, name, price, count, is_active FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
     
     res = [dict((cursor.description[i][0], value) \
         for i, value in enumerate(row)) for row in cursor.fetchall()]
@@ -108,8 +111,9 @@ def get_one_product(id: int, cursor: cursor_type):
 
 @db_connencion
 def put_one_product(id: int, name: str, count: int, is_active: bool, price: int, cursor: cursor_type):
-    cursor.execute(f"UPDATE products SET name={name}, price={price}, count={count}, is_active={is_active} FROM products WHERE id = '{id}';")
-    return cursor.statusmessage
+    cursor.execute("UPDATE products SET name=%s, price=%s, count=%s, is_active=%s WHERE id=%s;",
+                   (name, count, is_active, price, id))
+    return {'status': cursor.statusmessage}
 
 @db_connencion
 def search_product(request: str, page: int, cursor: cursor_type):
@@ -323,8 +327,8 @@ def get_all_orders(order: str, _start: int, cursor: cursor_type ) -> list:
     return res
 
 if __name__ == "__main__":
-    el = {'id':'asd'}
-    print(admin_auth('admin@test.ru', 'password'))
+    data = {'id': 1, 'name': 'Книга учета А4 160 л. глянцевая ламинация', 'price': 210, 'count': 14, 'is_active': True} # await request.json()
+    print(put_one_product(data['id'], data['name'], data['price'], data['count'], data['is_active']))
 
     # ro = user_register('lddads', 'asdddafsd', 'named@nk.ru')
     # print(ro)
