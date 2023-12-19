@@ -1,9 +1,9 @@
-import { Box, VStack, Center, StackDivider, Divider } from '@chakra-ui/layout';
-import React from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Box, VStack, Center, StackDivider, Divider } from '@chakra-ui/layout'
+import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 export default function SideMenu() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const buttonStyle = {
     height: 40,
@@ -11,7 +11,7 @@ export default function SideMenu() {
     hover: {
       color: 'blue',
     },
-  };
+  }
 
   return (
     <VStack
@@ -28,14 +28,14 @@ export default function SideMenu() {
         <Divider orientation="vertical" />
       </Center>
       <Box className="button_side" onClick={() => setSearchParams({ category: 'phones' })}>
-                Телефоны
+        Телефоны
       </Box>
       <Box className="button_side" onClick={() => setSearchParams({ category: 'notebooks' })}>
-                Компьютерные комплектующие
+        Компьютерные комплектующие
       </Box>
       <Box className="button_side" onClick={() => setSearchParams({ category: 'charger' })}>
-                Аксесуары
+        Аксесуары
       </Box>
     </VStack>
-  );
+  )
 }

@@ -1,14 +1,14 @@
-import { Box } from '@chakra-ui/layout';
-import { Link } from 'react-router-dom';
-import CabinetBlock from "../CabinetBlock/CabinetBlock";
+import { Box } from '@chakra-ui/layout'
+import { Link } from 'react-router-dom'
+import CabinetBlock from '../CabinetBlock/CabinetBlock'
 
 interface IProps {
   auth: boolean
 }
 
-export default function HeaderMenu({auth}: IProps) {
+export default function HeaderMenu({ auth }: IProps) {
   return (
-    <Box w="100%" mt={10} mb={10} className='menu-container'>
+    <Box w="100%" mt={10} mb={10} className="menu-container">
       <ul className="menu-main">
         <li>
           <Link to="/">Главная</Link>
@@ -20,7 +20,7 @@ export default function HeaderMenu({auth}: IProps) {
           <Link to="/cart">Корзина</Link>
         </li>
       </ul>
-      <CabinetBlock auth={auth}/>
+      <CabinetBlock auth={auth} />
     </Box>
-  );
+  )
 }

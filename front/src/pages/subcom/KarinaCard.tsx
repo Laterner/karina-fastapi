@@ -1,26 +1,20 @@
-// eslint-disable-next-line import/order
-import NoImage from '../../no_image.png';
-
-import './KarinaCard.css';
-import { useCookies } from 'react-cookie';
-import { useState } from 'react';
-
-import { PriceText , TitleText } from '../../shared/styledComponents/Texts';
-import { fetchData } from '../../components/api/API';
-import { CardButton } from '../../shared/styledComponents/Buttons';
-import {IProductType} from "./types/IProductType";
+import NoImage from '../../no_image.png'
+import './KarinaCard.css'
+import { PriceText, TitleText } from '../../shared/styledComponents/Texts'
+import { fetchData } from '../../components/api/API'
+import { CardButton } from '../../shared/styledComponents/Buttons'
+import type { IProductType } from './types/IProductType'
+import { useCartStore } from '../../components/Cart/store/CartStore'
+import { observer } from 'mobx-react-lite'
+import { addToCartUrl, cartId } from '../../shared/constants'
 
 interface IKarinaCardProps {
   card: IProductType
 }
-export default function KarinaCard({card}: IKarinaCardProps) {
-  const { name, id, price } = card;
-  const [cookies, setCookie] = useCookies(['cart']);
-
-  const url = '/add_to_cart/?uuid=';
-  const cartId = 'c11589f2-ce86-4691-8953-111a33c4c3e8';
-
-  const product_url = 'shop/product/' + id;
+const KarinaCard = ({ card }: IKarinaCardProps) => {
+  const { name, id, price } = card
+  const cartStore = useCartStore()
+  const product_url = 'shop/product/' + id
 
   return (
     <div className="card">
@@ -47,12 +41,17 @@ export default function KarinaCard({card}: IKarinaCardProps) {
           <CardButton
             color="#ff6633"
             className={'add_elem'}
-            onClick={() => fetchData(`${url + cartId}&product_id=${id}&count=1`, 'POST')}
+            onClick={() => {
+              cartStore.addCard({ ...card, count: 1 })
+              fetchData(`${addToCartUrl + cartId}&product_id=${id}&count=1`, 'POST')
+            }}
           >
             <p>В корзину</p>
           </CardButton>
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+export default observer(KarinaCard)

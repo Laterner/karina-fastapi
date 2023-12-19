@@ -1,4 +1,4 @@
-import { Box, Center } from '@chakra-ui/layout';
+import { Box, Center } from '@chakra-ui/layout'
 
 export default function PageNotFound() {
   const styles = {
@@ -6,7 +6,8 @@ export default function PageNotFound() {
       fontSize: '72px',
     },
     mes: {},
-  };
+  }
+
   return (
     <Box>
       <Center>
@@ -16,5 +17,5 @@ export default function PageNotFound() {
         <h3>Стариница не найдена</h3>
       </Center>
     </Box>
-  );
+  )
 }
