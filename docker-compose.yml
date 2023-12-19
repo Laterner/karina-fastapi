@@ -25,6 +25,7 @@ services:
   karina_admin:
     container_name: karina_admin
     build: ./admin-panel
+    env_file: .env
     volumes:
       - admin:/app/dist
     depends_on: 

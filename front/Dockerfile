@@ -4,7 +4,6 @@ ADD package*.json ./
 
 ARG VITE_API_HOSTNAME
 ENV VITE_API_HOSTNAME=$VITE_API_HOSTNAME
-RUN echo $VITE_API_HOSTNAME
 
 RUN npm install --only=prod --force
 COPY . /app

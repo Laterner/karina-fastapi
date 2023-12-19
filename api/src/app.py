@@ -89,6 +89,12 @@ def products(page: int = 1):
     content: list = db.get_products(page)
     return JSONResponse(content=content, headers=headers)
 
+@app.get('/get_all_products', tags=['products'])
+def get_all_products(order: str = 'ASC', start: int = 0, end: int = 10, sort: str = 'id'):
+    start = 0 if start < 0 else start
+    content: list = db.get_all_products(start, end, order, sort)
+    return JSONResponse(content=content, headers=headers)
+
 @app.get('/get_all_products/{id}', tags=['products'])
 def get_one_product(id: int):
     content = db.get_one_product(id)
@@ -105,12 +111,6 @@ def put_one_product(id: int, name: str, count: int, is_active: bool, price: int)
     "count": count,
     "is_active": is_active
 }, headers=headers)
-
-@app.get('/get_all_products', tags=['products'])
-def get_all_products(order: str = 'ASC', start: int = 0, end: int = 10, sort: str = 'id'):
-    _start = 0 if _start < 0 else _start
-    content: list = db.get_all_products(_start, end, order, sort)
-    return JSONResponse(content=content, headers=headers)
 
 # @app.get('/get_all_products', tags=['products'])
 # def get_one_product(id: int):
@@ -154,10 +154,10 @@ def delete_from_cart(uuid: str, product_id: int):
 
 """Orders page and activites"""
 @app.get('/get_all_orders', tags=['orders'])
-def get_all_orders(_order: str = 'ASC', _start: int = 0):
+def get_all_orders(_order: str = 'ASC', start: int = 0):
     """For api admin"""
-    _start = 0 if _start < 0 else _start
-    content: list = db.get_all_orders(_order, _start)
+    start = 0 if start < 0 else start
+    content: list = db.get_all_orders(_order, start)
     return JSONResponse(content=content, headers=headers)
 
 @app.get('/get_all_orders/{id}', tags=['orders'])
