@@ -94,7 +94,7 @@ def get_one_product(id: int):
     content = db.get_one_product(id)
     return JSONResponse(content=content, headers=headers)
 
-@app.put('/get_all_products/{id}')
+@app.put('/get_all_products/{id}', tags=['products'])
 def put_one_product(id: int, name: str, count: int, is_active: bool, price: int):
     print('request from put: ', name)
     # content = db.put_one_product(id, name, count, is_active, price)
@@ -107,10 +107,9 @@ def put_one_product(id: int, name: str, count: int, is_active: bool, price: int)
 }, headers=headers)
 
 @app.get('/get_all_products', tags=['products'])
-def get_all_products(_order: str = 'ASC', _start: int = 0):
-    """For api admin"""
+def get_all_products(order: str = 'ASC', start: int = 0, end: int = 10, sort: str = 'id'):
     _start = 0 if _start < 0 else _start
-    content: list = db.get_all_products(_order, _start)
+    content: list = db.get_all_products(_start, end, order, sort)
     return JSONResponse(content=content, headers=headers)
 
 # @app.get('/get_all_products', tags=['products'])
@@ -122,7 +121,7 @@ def get_all_products(_order: str = 'ASC', _start: int = 0):
 @app.get('/search', tags=['products'])
 def search(request: str, page: int = 1):
     page = 1 if page <= 0 else page
-    content: list = db.search(request, page)
+    content: list = db.search_product(request, page)
     return JSONResponse(content=content, headers=headers)
 
 @app.post('/delete_product', tags=['products'])

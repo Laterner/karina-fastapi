@@ -40,6 +40,8 @@ def init_database():
 
 
 ################################## переписал
+    
+""" Products """
 @db_connencion
 def get_products(page: int, cursor: cursor_type ) -> list:
     cursor.execute(f'SELECT id, name, price, is_active FROM products WHERE is_active=true ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};')
@@ -50,7 +52,7 @@ def get_products(page: int, cursor: cursor_type ) -> list:
     return res
 
 @db_connencion
-def get_all_products(_order: str, _start: int, cursor: cursor_type ) -> list:
+def get_all_products(_start: int, end: int, order: str, sort: str, cursor: cursor_type ) -> list:
     cursor.execute(f'SELECT id, name, price, is_active FROM products ORDER BY id LIMIT 10 OFFSET {(_start)};')
     
     res = [dict((cursor.description[i][0], value) \
@@ -79,13 +81,44 @@ def activate_product(uuid: str, product_id: int, cursor: cursor_type):
 
     return uuid, exe_status
 
-
 @db_connencion
 def get_products_count(cursor: cursor_type) -> int:
     cursor.execute('SELECT COUNT(*) FROM products;')
     print('type: ', type(cursor))
     return cursor.fetchone()[0]
 
+
+@db_connencion
+def get_products_by_category(category: str, page: int, cursor: cursor_type):
+    cursor.execute(f"SELECT id, name, category, price FROM products WHERE category @@ '{category}' ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
+    
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+    
+    return res
+
+@db_connencion
+def get_one_product(id: int, cursor: cursor_type):
+    cursor.execute(f"SELECT id, name, price, count, is_active FROM products WHERE id = '{id}';")
+    
+    res = [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()][0]
+    
+    return res
+
+@db_connencion
+def put_one_product(id: int, name: str, count: int, is_active: bool, price: int, cursor: cursor_type):
+    cursor.execute(f"UPDATE products SET name={name}, price={price}, count={count}, is_active={is_active} FROM products WHERE id = '{id}';")
+    return cursor.statusmessage
+
+@db_connencion
+def search_product(request: str, page: int, cursor: cursor_type):
+    cursor.execute(f"SELECT id, name, is_active, price FROM products WHERE name @@ '{request}' AND is_active=true  ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
+    
+    return [dict((cursor.description[i][0], value) \
+        for i, value in enumerate(row)) for row in cursor.fetchall()]
+
+""" Cart """
 @db_connencion
 def add_to_cart(uuid: str, product_id: int, count: int, cursor: cursor_type):
     if uuid == '':
@@ -150,36 +183,8 @@ def get_from_cart(uuid: str, cursor: cursor_type):
     
     return res
 
-@db_connencion
-def search(request: str, page: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, is_active, price FROM products WHERE name @@ '{request}' AND is_active=true  ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
-    
-    return [dict((cursor.description[i][0], value) \
-        for i, value in enumerate(row)) for row in cursor.fetchall()]
 
-@db_connencion
-def get_products_by_category(category: str, page: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, category, price FROM products WHERE category @@ '{category}' ORDER BY id LIMIT 12 OFFSET {(page - 1) * 12};")
-    
-    res = [dict((cursor.description[i][0], value) \
-        for i, value in enumerate(row)) for row in cursor.fetchall()]
-    
-    return res
-
-@db_connencion
-def get_one_product(id: int, cursor: cursor_type):
-    cursor.execute(f"SELECT id, name, price, count, is_active FROM products WHERE id = '{id}';")
-    
-    res = [dict((cursor.description[i][0], value) \
-        for i, value in enumerate(row)) for row in cursor.fetchall()][0]
-    # res = if res['type'] == 'error'
-    return res
-
-@db_connencion
-def put_one_product(id: int, name: str, count: int, is_active: bool, price: int, cursor: cursor_type):
-    cursor.execute(f"UPDATE products SET name={name}, price={price}, count={count}, is_active={is_active} FROM products WHERE id = '{id}';")
-    return cursor.statusmessage
-
+""" Auth """
 @db_connencion
 def admin_auth(email: str, password: str, cursor: cursor_type) -> dict:
     hashed_password = sha256(password.encode()).hexdigest()
@@ -229,6 +234,8 @@ def user_register(first_name: str, last_name: str, email: str, cursor: cursor_ty
 def get_token():
     pass
 
+
+""" Orders """
 @db_connencion
 def get_orders_by_user(user_uuid: str, cursor: cursor_type):
     cursor.execute(
@@ -305,7 +312,7 @@ def create_order(user_uuid: str, products_in_cart: list[dict], cursor: cursor_ty
     return order_uuid, exe_status
 
 @db_connencion
-def get_all_orders(_order: str, _start: int, cursor: cursor_type ) -> list:
+def get_all_orders(order: str, _start: int, cursor: cursor_type ) -> list:
     cursor.execute(
         f"SELECT * FROM orders ORDER BY id LIMIT 10 OFFSET {(_start)};"
     )
