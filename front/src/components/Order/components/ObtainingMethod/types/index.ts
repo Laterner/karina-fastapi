@@ -1,1 +1,0 @@
-export { EObtainingMethodInput } from './EObtainingMethodInput'
