@@ -20,7 +20,7 @@ export const ProductPageDataItem = styled.div`
   }
 `
 
-export const Button = styled.div<{
+export const Button = styled.button<{
   width?: CSSProperties['width']
   height?: CSSProperties['height']
   bgcolor: CSSProperties['backgroundColor']

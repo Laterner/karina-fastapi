@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import type { IProductType } from '../../pages/subcom/types/IProductType'
+import type { IProductType } from '../pages/subcom/types/IProductType'
 
 const API_HOSTNAME = import.meta.env.VITE_API_HOSTNAME
 
